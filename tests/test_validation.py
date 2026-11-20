@@ -84,6 +84,14 @@ def test_copied_spell_does_not_grant_prepared_creature_legality(validator):
     assert any(p.code == "card-not-in-format" for p in result.problems)
 
 
+@pytest.mark.parametrize("name", ["Good Card", "Good,  Card"])
+def test_research_normalisation_cannot_authorise_engine_unknown_spelling(validator, name):
+    assert validator.pool.resolve(name).name == "Good, Card"
+    result = validator.validate(deck(name))
+    assert any(p.code == "noncanonical-card-name" for p in result.problems)
+    assert not result.passed
+
+
 def test_disagreement_is_reported_and_refused(validator):
     validator.scryfall = replace(validator.scryfall, legal_names=frozenset({"island"}))
     result = validator.validate(deck())

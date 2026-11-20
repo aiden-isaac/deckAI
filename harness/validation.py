@@ -215,8 +215,8 @@ class DeckValidator:
                 script = self.pool.resolve(entry.name)
             except AmbiguousCardName:
                 continue
-            if script and canonical_name(entry.name) not in {
-                canonical_name(alias) for alias in (script.name, *script.faces)
+            if script and entry.name.casefold() not in {
+                alias.casefold() for alias in (script.name, *script.faces)
             }:
                 result.problems.append(Problem(
                     code="noncanonical-card-name", card=entry.name,
