@@ -1,0 +1,6 @@
+{
+  "clean_patch_application": true,
+  "source_tree_equals_primary": true,
+  "offline_build_succeeded": true,
+  "five_game_records_equal_primary": true
+}

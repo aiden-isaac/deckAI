@@ -1,0 +1,17 @@
+{
+  "clock_draw_invariant_verified": true,
+  "clock_batch_continues": true,
+  "same_seed_games": 10,
+  "same_seed_identical": true,
+  "different_seed_outcomes_differ": true,
+  "isolated_replay_matches": true,
+  "fixed_starting_seats_verified": [
+    0,
+    1
+  ],
+  "damage_nonzero": true,
+  "mulligans_nonzero": true,
+  "runtime_ai_complaints_captured": true,
+  "append_preserves_existing_records": true,
+  "wrong_seed_count_refused_before_play": true
+}

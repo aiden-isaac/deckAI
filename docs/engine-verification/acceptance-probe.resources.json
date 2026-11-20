@@ -1,0 +1,7 @@
+{
+  "elapsed_seconds": 32.300630917000035,
+  "peak_rss_kib": 1566852,
+  "xmx_mib": 2048,
+  "exit_code": 0,
+  "measurement": "resource.getrusage(RUSAGE_CHILDREN); /usr/bin/time absent"
+}

@@ -1,0 +1,12 @@
+{
+  "engine_commit": "d16199280919834339c9c17ce477e8e95191f996",
+  "patched_commit": "31a6f7eabe78499edd81b17507e94c7dba1e4302",
+  "patch_hash": "876d2a13e00d4def399e294379a8356e6dd47e86108a84f54ca9c14c3dc357ea",
+  "card_data_version": "74f929e900b23e7e443193bd8e87e0fdf68532ab",
+  "patch_files": [
+    "0001-sim-jsonl-output-append-measured-game-records-and-co.patch",
+    "0002-sim-per-game-seed-reseed-each-independent-game-from-.patch"
+  ],
+  "jar": "/home/aiden/Projects/forge/forge-gui-desktop/target/forge-gui-desktop-2.0.17-SNAPSHOT-jar-with-dependencies.jar",
+  "jar_sha256": "4c26055a3d464dc05549d508eee8069122614b4ecb4fc80b41911d54619a1e36"
+}

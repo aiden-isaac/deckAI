@@ -1,0 +1,23 @@
+	Command being timed: "/home/aiden/.local/opt/jdk-17.0.21.1+2/bin/java -Xmx2g -Djava.awt.headless=true -jar /home/aiden/Projects/forge/forge-gui-desktop/target/forge-gui-desktop-2.0.17-SNAPSHOT-jar-with-dependencies.jar sim -D / -d home/aiden/Projects/deckAI/decks/acceptance/healthy.dck home/aiden/Projects/deckAI/gauntlets/acceptance/white-lifegain.dck -n 5 -S /home/aiden/Projects/deckAI/docs/engine-verification/acceptance-white.seeds -first 1 -a Default Default -mc off -c 120 -q -o /home/aiden/Projects/deckAI/docs/engine-verification/acceptance-white.jsonl"
+	User time (seconds): 73.84
+	System time (seconds): 7.28
+	Percent of CPU this job got: 652%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.42
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1458380
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 255439
+	Voluntary context switches: 826434
+	Involuntary context switches: 20754
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 200
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
