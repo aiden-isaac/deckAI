@@ -205,3 +205,8 @@ def test_allocation_cell_size_is_overridable():
     )
     assert allocation == {"boros-aggro": 500, "dimir-control": 500}
     assert all(count % 4 == 0 for count in allocation.values())
+@pytest.mark.parametrize("weight", [float("nan"), float("inf")])
+def test_non_finite_weights_are_refused(weight):
+    with pytest.raises(ValueError, match="positive and finite"):
+        stats.allocate_games({"red": weight}, 20)
+

@@ -1156,13 +1156,12 @@ class ResultIdentity:
         missing = []
         for name in IDENTITY_FIELDS:
             value = getattr(self, name)
-            if value is None:
-                missing.append(name)
-            elif isinstance(value, str) and value.strip().lower() in _PLACEHOLDERS:
-                missing.append(name)
-            elif isinstance(value, (int, float)) and not isinstance(value, bool):
-                if value <= 0:
+            if name == "game_clock_seconds":
+                if (isinstance(value, bool) or not isinstance(value, (int, float))
+                        or not math.isfinite(value) or value <= 0):
                     missing.append(name)
+            elif not isinstance(value, str) or value.strip().lower() in _PLACEHOLDERS:
+                missing.append(name)
         return tuple(missing)
 
     def require_complete(self) -> "ResultIdentity":
@@ -1197,10 +1196,11 @@ def require_poolable(
     """
     if not identities:
         raise ValueError("nothing to pool: no results given")
-    reference = identities[0]
+    reference = identities[0].require_complete()
     differences: list[FieldDifference] = []
     seen: set[tuple[str, object, object]] = set()
     for identity in identities[1:]:
+        identity.require_complete()
         for difference in reference.differences(identity):
             marker = (difference.field, repr(difference.left), repr(difference.right))
             if marker not in seen:
@@ -1232,6 +1232,8 @@ def require_current_baseline(
     sideboarding, clock, pilot logic -- must match, or the baseline has to be
     re-measured before it can be screened against.
     """
+    baseline.require_complete()
+    candidate_run.require_complete()
     differences = baseline.differences(candidate_run, BASELINE_CURRENCY_FIELDS)
     if differences:
         raise StaleBaseline(differences)
@@ -1403,9 +1405,9 @@ def _normalised_weights(
     if not weights:
         raise ValueError("a gauntlet weighting must name at least one opponent")
     for name, weight in weights.items():
-        if weight <= 0.0:
+        if not math.isfinite(weight) or weight <= 0.0:
             raise ValueError(
-                f"weight for {name!r} must be positive, got {weight!r}; drop the "
+                f"weight for {name!r} must be positive and finite, got {weight!r}; drop the "
                 "opponent from the weighting instead"
             )
     if opponents is not None:

@@ -150,3 +150,17 @@ def test_pooling_nothing_is_refused():
         stats.pool_results([])
     with pytest.raises(ValueError, match="no results given"):
         stats.require_poolable([])
+
+
+def test_matching_placeholders_are_refused_at_pooling_and_screening_boundaries():
+    incomplete = identity(patch_hash="TBD")
+    with pytest.raises(ValueError, match="patch_hash"):
+        stats.require_poolable([incomplete, incomplete])
+    with pytest.raises(ValueError, match="patch_hash"):
+        stats.require_current_baseline(incomplete, incomplete)
+
+
+@pytest.mark.parametrize("clock", [True, float("nan"), float("inf"), "120"])
+def test_non_numeric_or_non_finite_clock_is_incomplete(clock):
+    with pytest.raises(ValueError, match="game_clock_seconds"):
+        identity(game_clock_seconds=clock).require_complete()
