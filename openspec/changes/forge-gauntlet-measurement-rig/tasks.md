@@ -20,12 +20,12 @@ Group 6 is a hard gate: nothing in groups 8-10 starts until it passes.
 
 ## 3. Deck files and validation gate
 
-- [ ] 3.1 Implement `.dck` reading and writing (main deck, sideboard, card names, counts) and verify a round-trip of a hand-written 60+15 list is byte-identical after normalisation
-- [ ] 3.2 Build the installed-card-pool index by scanning the pinned `forge-gui/res/cardsfolder/` (including compound filenames such as `aang_swift_savior_aang_and_la_oceans_fury.txt`), and verify the index resolves all of Kobayashi Maru Scenario, The Naked Time, Iroh Tea Master, United Battlefront, Harmless Offering, Shiko Paragon of the Way, Skycoach Conductor and Aang Swift Savior
-- [ ] 3.3 Parse Forge's `res/formats/Sanctioned/Standard.txt` into legal sets plus ban list and verify the parsed ban list matches the file's `Banned:` entries exactly
-- [ ] 3.4 Download Scryfall bulk `oracle_cards`, filter to `legalities.standard == "legal"` and paper-available, and verify the filtered count is reported and cached to disk for offline reuse
-- [ ] 3.5 Implement the validation gate intersecting the three sources plus construction rules (60 minimum main, 15 maximum sideboard, 4-copy limit with basic-land exception) and verify unit tests cover: legal list passes, banned card rejected, 5-copy rejected, 59-card rejected, card-absent-from-pool rejected, and Forge/Scryfall disagreement reported rather than resolved
-- [ ] 3.6 Implement pilot-competence disclosure by collecting `AI:RemoveDeck` and `SVar:AI` flags from card scripts, and verify Harmless Offering is reported as flagged (`AI:RemoveDeck:Random`) while Kobayashi Maru Scenario is not
+- [x] 3.1 Implement `.dck` reading and writing (main deck, sideboard, card names, counts) and verify a round-trip of a hand-written 60+15 list is byte-identical after normalisation
+- [x] 3.2 Build the installed-card-pool index by scanning the pinned `forge-gui/res/cardsfolder/` (including compound filenames such as `aang_swift_savior_aang_and_la_oceans_fury.txt`), and verify the index resolves all of Kobayashi Maru Scenario, The Naked Time, Iroh Tea Master, United Battlefront, Harmless Offering, Shiko Paragon of the Way, Skycoach Conductor and Aang Swift Savior
+- [x] 3.3 Parse Forge's `res/formats/Sanctioned/Standard.txt` into legal sets plus ban list and verify the parsed ban list matches the file's `Banned:` entries exactly
+- [x] 3.4 Download Scryfall bulk `oracle_cards`, filter to `legalities.standard == "legal"` and paper-available, and verify the filtered count is reported and cached to disk for offline reuse
+- [x] 3.5 Implement the validation gate intersecting the three sources plus construction rules (60 minimum main, 15 maximum sideboard, 4-copy limit with basic-land exception) and verify unit tests cover: legal list passes, banned card rejected, 5-copy rejected, 59-card rejected, card-absent-from-pool rejected, and Forge/Scryfall disagreement reported rather than resolved
+- [x] 3.6 Implement pilot-competence disclosure by collecting `AI:RemoveDeck` and `SVar:AI` flags from card scripts, and verify Harmless Offering is reported as flagged (`AI:RemoveDeck:Random`) while Kobayashi Maru Scenario is not
 - [ ] 3.7 Implement runtime reveal parsing for stripped and cannot-play-well cards, mark such runs unscorable, and verify a deliberately constructed deck containing a non-existent card name yields an unscorable run with the card named
 
 ## 4. Gauntlet runner
