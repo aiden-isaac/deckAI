@@ -2,122 +2,59 @@
 
 ## Context
 
-See `proposal.md` for motivation. The constraints that shape this design:
-
-- **Host is `kano`**, the dev laptop: 20 cores, 16 GB RAM, RTX 4050 (6 GB), 36 GB free disk, Java 27, Maven absent, `git`/`jq`/`sqlite3`/`python3` present. `jarlaxle` migration is deferred.
-- **Network is ~1 Mbps.** A Forge clone and a first Maven build will take hours, not minutes. Nothing in the critical path may assume a fast download.
-- **Engine facts verified from upstream source** during research: `forge.view.SimulateMatch` is the headless entry point; `-s` seeds a whole run (not a game); `-c` defaults to a 120 s per-game clock; `AISideboardingEnabled` and `sideboardForAI` both default `false` and `SimulateMatch` never sets them; `-mc` (Flat Monte Carlo) defaults off in simulation so `sim` runs a weaker AI than the GUI; `Match.java` builds the library from `getValid().getLeft()` and merely *reveals* unscripted cards, so a deck silently shrinks; `sim` never calls `getDeckConformanceProblem()`.
-- **The target deck's cards are implemented.** Verified in `forge-gui/res/cardsfolder/`: `kobayashi_maru_scenario.txt`, `the_naked_time.txt`, `iroh_tea_master.txt`, `united_battlefront.txt`, `harmless_offering.txt`, `shiko_paragon_of_the_way.txt`, `stiltzkin_moogle_merchant.txt`, `aangs_iceberg.txt`, `solitary_cell.txt`, `seam_rip.txt`, plus `aang_swift_savior_aang_and_la_oceans_fury.txt` and `skycoach_conductor_all_aboard.txt` under their compound filenames.
-- **The combo is not pilotable as shipped.** `iroh_tea_master.txt` declares `AILogic$ DonateJunk` on both its `TargetOnly` and `GainControl` sub-abilities, and that logic lives in `forge-ai/src/main/java/forge/ai/ability/ControlGainAi.java`. `harmless_offering.txt` carries `AI:RemoveDeck:Random`. The names are self-describing: the stock AI donates *junk*, which for this deck means donating a Food token instead of Kobayashi Maru Scenario. Without a change here, the deck's win condition is never reached and its measured win rate says nothing about the decklist.
+The pinned local Forge build, three-source validator and recording/statistics utilities already exist. Existing AI runner code is legacy work, not the external-pilot interface. The old plan is preserved in Git history. Current primary sources identify spike-eval's PlayerControllerLLM, SeatObservation and AnswerTool as the closest reusable boundary; its inherited callbacks and deterministic fallback choices still need an independent audit. An ai=0 counter alone is insufficient. Installed Codex supports persistent app-server threads, output schemas and ChatGPT authentication. Rootless bwrap is installed.
 
 ## Goals / Non-Goals
 
-**Goals:**
+**Goals:** actual CLI sessions own play; private state stays private; every accepted decision is attributable/replayable; initial Standard profiles have useful sourced strategy; limits pause play; a controlled lesson is used in later play.
 
-- A measurement pipeline whose every number is reproducible from a recorded identity.
-- Failure that is loud. Every known silent-corruption path in the engine becomes an explicit refusal.
-- A pilot that can execute a donate combo, and a way to tell whether it did.
-- Throughput good enough to screen candidates on one laptop, with worker count derived from measured memory rather than guessed.
-
-**Non-Goals:**
-
-- No in-game LLM calls, at any point, for any reason. The arithmetic ruling this out is in `.agents/tasks/research-cli-agent-pilot.md`.
-- No local decider model in this change. Not rejected forever, just not now: it belongs on audited subsets after the rig is trustworthy.
-- No search algorithm, no LLM proposal loop, no sideboard-plan optimization. Those are later changes that consume this one's output.
-- No general-purpose Forge fork. The patch series stays minimal and rebasable.
+**Non-Goals:** Donate heuristics, Forge strategic AI, first-legal defaults, cold CLI startup per decision, a new rules engine, neural training, deck optimization, throughput gates or competitive-strength claims.
 
 ## Decisions
 
-### D1. Patch series as git commits on a pinned branch, exported as files into this repo
+### D1. Pin and audit a reused decision adapter
 
-Forge lives at `/home/aiden/Projects/forge` (outside this repo, since it is GPL-3.0 upstream and 100 MB+). We pin an upstream commit, branch from it, and keep each change as one focused commit. `git format-patch` output is copied into `forge-patches/` here, so this repo records exactly what was changed without vendoring Forge.
+Pin adapter source and verify compatibility with the selected Forge API before building. Keep overlay, provenance, license and patches under engine-adapter. Each strategic callback publishes a decision or explicitly fails unsupported: priority, casts/activations, targets, modes, exact payments, mulligans, triggers/ordering, combat and sideboarding included. No strategic choice can pass through Forge brains, AI payment, greedy resource selection or first-legal fallback. Forced singletons/no-choice mechanics can execute with explicit provenance. Use API-drift tests, ownership inventory and callback instrumentation.
 
-*Alternative considered:* a full fork as a submodule. Rejected — a submodule of a 100 MB+ repo on a 1 Mbps link makes every clone painful, and Standard rotation means rebasing onto new Forge releases regularly, which is easier with a short patch series than with a divergent fork.
+### D2. One rules game and two persistent CLI seats
 
-### D2. Four patches, each independently revertable
+Python maintains one app-server process/thread per seat/game with existing authentication and minimal configuration. Send only its own observation and playbook; require a structured response each turn. Do not restart the CLI per move. Record models/effort; development-worker model assignments do not silently choose gameplay models. Use operator-configured gameplay model by default. Isolate provider code in harness/pilots; implement Codex first and document Kiro ACP follow-up.
 
-1. **`sim-jsonl-output`** — add `-o <file>`: one JSON object per game appended as it completes, with winner, loss reason, turns, elapsed ms, seed, seat, mulligans, draw flag, match-game index. Replaces stdout scraping, which the research flagged as the component most likely to be silently wrong.
-2. **`sim-per-game-seed`** — accept `-S <seedfile>` (one seed per line) so game *i* uses seed *i*. This is what makes paired A/B testing possible; `-s` alone seeds the run.
-3. **`sim-enable-ai-sideboard`** — add a flag that calls `setAISideboardingEnabled(true)` and `setSideboardForAI(true)`. Roughly ten lines; without it the 15-card sideboard goal is unreachable.
-4. **`sim-expose-mc`** — surface `-mc` so AI strength is a declared experiment parameter rather than an undocumented default.
+### D3. Frozen bridge envelope v1
 
-Patches 1 and 2 are prerequisites for the acceptance test. Patches 3 and 4 can land later without reworking anything.
+Decision: protocol_version=1, game_id, seat (0 or 1), decision_id, state_revision, view with public/private sections, legal_actions and playbook_version. Each legal action has action_id, label and optional parameters_schema. Use engine-owned compound schemas rather than enumerate attack combinations. Answer echoes game_id, seat, decision_id and state_revision, plus action_id and parameters. Engine validates exact identity, schema and actual legality before applying once; repeats return the previous accepted result.
 
-### D3. Python harness drives the JVM as a subprocess; no in-process bridge
+Publish immutable observations on the game thread. Apply face visibility separately from zone visibility, honor temporary reveals and invalidate remembered information after shuffling. Hidden hands/library order and unrevealed faces must not be serialized. Never serialize raw Game/GameView objects.
 
-The harness spawns `java -jar forge.jar sim ...` and reads the JSONL file. No JPype, no JNI, no long-lived RPC.
+### D4. Enforced pilot isolation
 
-*Why:* process isolation means a hung or crashed game cannot corrupt the harness or other games, and the kill-and-requeue path is trivial. A long-lived in-process bridge (manabrew's approach) is the right design for *per-decision* control, which this change explicitly does not need.
+Each pilot has a private runtime/memory directory. Disable unrelated shell/apps/plugins/MCP/memory tools with verified settings. Separate cwd/read-only mode alone is insufficient. Use rootless bwrap filesystem/PID isolation if tool absence is not provable: mount only runtime dependencies, private authentication/config and its own memory; exclude sibling files/referee logs. Verify denial using actual processes and audit the actual model-visible tools before play.
 
-*Consequence:* a batch must amortize the card-database load, so the unit of work is "one worker runs N sequential games", not "one process per game". One-process-per-game is reserved for reproducing a single recorded game.
+### D5. Sourced Standard profiles
 
-### D4. Worker count from measured memory, not from `nproc`
+Select current Izzet aggro/prowess and aggressive landfall (mono-green or Gruul according to real sources). Freeze exact 60+15 lists with author/event/publication/retrieval dates and URLs. Profiles cover objective, mulligans, sequencing, priority, combat, interaction and sideboarding. Distinguish sourced advice from inferred changes. Video descriptions are not watched gameplay; timestamps require inspected transcript/video. Label missing/paywalled sources. Revalidate against pinned Forge and dated Scryfall; never silently replace illegal cards while claiming the original list. Validate in/out counts against the actual sideboard.
 
-Each worker is one JVM holding the full card database. The harness reads free memory at startup, divides by a measured per-worker ceiling (`-Xmx` plus overhead), and caps concurrency there. The per-worker figure comes from task 2's measurement, not from a guess.
+### D6. Journal, pause and recover
 
-*Why:* 20 cores are irrelevant if 16 GB only fits 6 JVMs. Over-subscribing swaps and silently inflates seconds-per-game, which would corrupt the throughput model the whole budget rests on.
+Append decision-time view, choice schema, model/profile identity, raw response, accepted action and engine result. Mark external/forced/mechanical origins. On quota, transport, schema or unsupported callback failure, preserve the pending decision and pause; no clock loss, default action or credited win. Resume the same seat conversation after checking whether an answer was applied. After process death, replay seed plus accepted-action journal and verify prompt/state identity; refuse divergence rather than guess.
 
-### D5. Three independent validation sources, intersected
+### D7. Versioned learning
 
-A card is testable only if it is (a) legal per Forge's own `res/formats/Sanctioned/Standard.txt`, (b) present in the installed `cardsfolder/`, and (c) legal per Scryfall's `legalities.standard`. Disagreement between (a) and (c) is reported, never silently resolved.
+Freeze profiles during the match. Postgame review proposes a tentative lesson naming a decision, information actually available then, an alternative and a testable consequence. A seat updates only its own playbook; retain old versions and explicitly load new versions next game. Test the lesson in a captured-decision replay or rules-checked scenario. This is external-memory learning, not weight training; a win alone proves no quality gain.
 
-*Why all three:* Forge's file is authoritative for what the engine will *do* and is updated within days of each set and ban announcement; Scryfall is authoritative for what is legal in paper, which is what the user's money is spent on. A card legal in paper but absent from the engine is untestable; a card in the engine but rotated out of paper is a wasted test.
+### D8. Small acceptance gates
 
-Pilot-competence flags (`AI:RemoveDeck`, `SVar:AI`, and the runtime `complainCardsCantPlayWell` reveal) are collected as **disclosures, not exclusions** — the user has deliberately chosen cards the AI dislikes, so the right response is to label the result, not to refuse it.
-
-### D6. Donate logic as a new named `AILogic`, not a change to `DonateJunk`
-
-Add a new AI logic branch (working name `DonateLethal`) in `ControlGainAi`, and point Iroh's card script at it via a **card-script overlay** — a patched copy of the one card file — rather than editing `DonateJunk`, which three other cards use.
-
-The logic has three parts, mirroring the three rules in the `pilot-policy` spec:
-
-1. **Declining is a first-class choice.** Iroh's trigger is `OptionalDecider$ You` with chosen targets, so "donate nothing" is always legal and is correct whenever no permanent has a pending harmful effect. Donating a useful permanent is strictly worse than donating nothing.
-2. **Prefer a permanent whose *next* pending effect harms its controller.** Two concrete shapes to detect against the pinned source:
-   - *Modal upkeep trigger with `ChoiceRestriction$ ThisGame`* (Kobayashi Maru Scenario): donate once every mode except the one that makes its controller lose has been chosen, so the new controller is forced into it on their upkeep. Donating earlier hands the opponent a card-draw, a bounce or two tokens instead.
-   - *Saga whose final chapter harms its controller* (The Naked Time, chapter III sacrifices a land): donate when lore counters are exactly one short of that chapter, so the opponent receives only the sacrifice. Donating at one counter would give them the beneficial chapter II first.
-3. **Timing guard.** Donate only when the harmful effect resolves under the new controller before the pilot would suffer it — i.e. the opponent's next upkeep precedes the pilot's. For an upkeep-triggered permanent donated at the pilot's beginning of combat, this holds; the guard exists so the logic cannot talk itself into a donation that kills the pilot first.
-
-Fall back to `DonateJunk` behaviour when no permanent qualifies and the effect is not optional.
-
-*Alternatives considered:* (i) change `DonateJunk` itself — rejected, it silently alters Coveted Falcon and Jon Irenicus and makes our results incomparable with anyone else's; (ii) hardcode "if you control Kobayashi Maru Scenario, donate it" — rejected, it measures a special case rather than the strategy, and would not transfer to any other donate payload the deck explores. The two detection shapes above are deliberately written against card *structure* (a modal upkeep trigger with an exhausting choice restriction; a Saga with a harmful final chapter) rather than against card names, so a new payload with the same shape is picked up for free.
-
-*Accepted limitation:* this is a heuristic over the current board, not a solver. It decides *what and when to donate* correctly; it does not plan the whole line (develop, protect Iroh, hold up interaction, deny the escape). The `pilot-policy` spec's win-condition-execution-rate requirement exists precisely so we can see how often the full line comes together instead of assuming it.
-
-### D7. JSONL as the source of truth, SQLite as the index
-
-Every game appends to a run-scoped JSONL file. SQLite is built from those files and may be deleted and rebuilt at any time.
-
-*Why:* an append-only text file survives crashes mid-batch, is diffable, and cannot be corrupted by a concurrent writer holding a lock. The research's crash-recovery requirement is "checkpoint after every game", which this satisfies for free.
-
-### D8. Statistics hand-rolled, explicit, and tested against known inputs
-
-SPRT, the paired confirmation and the interval estimates are written out in the harness with no statistics framework, and unit-tested against hand-computed values.
-
-*Why:* the whole project's credibility is these few hundred lines. A dependency that hides the stopping rule behind a method call is a liability, and the formulae are short. Only `scipy` would be imported, and only for distribution functions that can be checked against published tables.
-
-### D9. The acceptance test is a gate in the task list, not a checkbox at the end
-
-Tasks are ordered so the known-answer test (24 lands cut to 20, SPRT against the healthy list) runs as soon as patches 1-2 and the runner exist, before the donate deck, before the AI logic, before any statistics beyond SPRT. Downstream tasks are explicitly blocked on it.
-
-*Why:* if Forge's AI cannot feel a broken mana base, the project has no instrument, and that should cost a day rather than a month.
+First test scripted bridge responses, hidden views, stale/duplicate IDs and AI/default refusals. Then run actual authenticated CLI smoke tests in isolation. Complete one recorded game with both CLI seats, exercise their sideboard choices into game two, interruption/recovery and one lesson/replay cycle. Keep lists fixed for this proof.
 
 ## Risks / Trade-offs
 
-- **Forge's AI may be unable to pilot a combo deck even with `DonateLethal`.** Its own authors call it "pretty bad for most combo decks". → The win-condition-execution-rate requirement surfaces this as a number within the first run of the donate deck. If execution rate is near zero, we report that the deck is not measurable by this instrument rather than reporting a misleading win rate, and the user decides whether to spend on a better pilot.
-- **Java 27 is newer than Forge targets; the build may fail or misbehave.** → Verify the build early. If it fails, install a JDK that Forge's `pom.xml` declares and pin `JAVA_HOME` for the build only. This is a day-one task precisely because the download is slow.
-- **Maven is absent and a first build pulls hundreds of MB at ~1 Mbps.** → Start the build as early as possible and let it run; meanwhile, do the no-build work (validation module, Scryfall data, deck authoring, statistics unit tests) against a downloaded release jar. Maven installs from a ~10 MB tarball into `~/.local` with no root required.
-- **36 GB free disk, and Forge plus a Maven cache plus card images is several GB.** → Skip optional image downloads, monitor free space in the measurement task, and keep JSONL compressed once a run is closed.
-- **Patch series rots on each Forge upgrade, and Standard rotates, so upgrades are mandatory.** → Keep patches minimal and append-only in scope; re-run the acceptance test after every rebase, treating it as the regression test for the engine integration.
-- **A single aggregate win rate is a property of the gauntlet, not of the deck.** → The weighting is a declared, versioned input and every accepted decision is re-scored under alternative weightings, per the `experiment-statistics` spec.
-- **GPL-3.0 obligations attach once we compile against patched Forge.** → Accepted and recorded in the proposal; the harness is treated as GPL-3.0.
-- **The donate deck's candidate pool is currently one person's suggestion list.** → A dedicated exploration task widens it from the whole Standard-legal pool before any optimization begins, so the search does not start pre-narrowed to untested assumptions.
+- Adapter/Forge mismatch: compile and audit first, pin both and preserve patches.
+- Inherited strategic choices: fail closed and require non-forced decision provenance.
+- CLI tools leak state: enforce filesystem isolation and test actual read denial.
+- Complex prompts omit legal choices: preserve engine-owned schemas; unsupported callbacks pause.
+- Low game volume: describe functional/controlled-decision evidence, not metagame strength.
+- Shared provider quota: pause with durable session/action identity; no unlimited-play promise.
 
 ## Migration Plan
 
-Not applicable: this is the project's first change and there is no deployed state. Rollback for any engine patch is `git revert` on the Forge branch followed by a rebuild; rollback for the harness is ordinary version control. A failed acceptance test halts the change rather than rolling anything back.
-
-## Open Questions
-
-- **Per-worker memory ceiling and seconds per game** are unmeasured; task 2 produces them and the throughput model self-corrects. Deferrable because no spec or task ordering depends on the values, only the worker count does.
-- **Whether `-mc max` is worth its time cost** — stronger AI per game versus more games per hour. Deferrable: patch 4 makes it a parameter, and the first calibration run can measure both settings.
-- **Gauntlet sourcing** — hand-authored opponent decks versus scraping current Standard lists. This change needs only three to five fixed opponents for the acceptance test and the first donate-deck run; the sourcing policy can be settled when the optimization loop needs a representative metagame.
+Preserve interrupted foundations. Revise this active plan under user authorization and direct README to the external-pilot entrypoint. Label the legacy AI runner. New overlay/pilot commits can roll back independently of existing card/engine data.

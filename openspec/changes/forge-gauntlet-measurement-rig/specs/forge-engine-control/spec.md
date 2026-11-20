@@ -2,90 +2,80 @@
 
 ## Purpose
 
-Drives a pinned, patched Forge build headlessly so that batches of AI-vs-AI games can be run on demand and every game returns one structured record stamped with the exact engine version that produced it.
+Runs a pinned rules referee for external pilots, exposing faithful legal decisions and recording accepted actions without silently choosing strategy.
 
 ## ADDED Requirements
 
-### Requirement: Pinned engine identity
+### Requirement: Pinned rules and adapter identity
 
-The system SHALL record, for every batch of games it runs, the Forge upstream commit, the hash of the applied patch series, and the card-data version in use, and SHALL refuse to run when the working engine tree does not match the recorded pin.
+The system SHALL record and verify the engine, adapter, patch, card-data and deck identities before starting or reconstructing a game.
 
-#### Scenario: Engine matches the pin
+#### Scenario: Drift refused
 
-- **WHEN** a batch is requested and the engine tree's commit and patch hash equal the recorded pin
-- **THEN** the batch runs and every resulting game record carries that commit and patch hash
+- **WHEN** a required source or artifact differs from its recorded identity
+- **THEN** play is refused with the differing component named
 
-#### Scenario: Engine has drifted from the pin
+### Requirement: Seat-private observations
 
-- **WHEN** a batch is requested and the engine tree's commit or patch hash differs from the recorded pin
-- **THEN** the system refuses to run the batch and reports which component drifted
+The system SHALL expose only public state and information the acting seat is authorized to know, including face visibility and temporary reveals.
 
-### Requirement: Headless batch execution
+#### Scenario: Opponent private state hidden
 
-The system SHALL run AI-vs-AI games with no graphical interface and no network, accepting a candidate deck, an opponent deck, a game count, an AI profile per seat, and a per-game time limit.
+- **WHEN** a seat receives a decision
+- **THEN** opponent hidden hand contents, library order and unrevealed faces are absent
 
-#### Scenario: Batch of games completes
+#### Scenario: Authorized reveal visible
 
-- **WHEN** a batch of N games is requested for two valid decks
-- **THEN** the system returns N game records and a non-zero count of games actually played
+- **WHEN** an effect permits a seat to inspect a hidden card
+- **THEN** that seat receives its authorized information without exposing it to the other seat
 
-#### Scenario: A game exceeds its time limit
+### Requirement: External strategic ownership
 
-- **WHEN** a game exceeds the configured per-game time limit
-- **THEN** that game is recorded as a draw with a flag marking it as clock-terminated, and the batch continues
+Every non-forced strategic choice SHALL come from the declared external pilot. Unowned callbacks and failed answers MUST pause or fail without AI, greedy or first-legal selection.
 
-### Requirement: Per-game seeding
+#### Scenario: Missing response
 
-The system SHALL accept a distinct shuffle seed for each individual game in a batch, so that two different decklists can be played against the same sequence of shuffles.
+- **WHEN** a non-forced decision has no valid pilot answer
+- **THEN** the pending decision remains unapplied and no fallback move is made
 
-#### Scenario: Same seed reproduces a game
+#### Scenario: Forced operation
 
-- **WHEN** a recorded game is re-run alone with its recorded seed, decks, AI profile and engine pin
-- **THEN** the replayed game produces the same winner and the same turn count
+- **WHEN** exactly one legal mechanical outcome exists
+- **THEN** it may execute with a forced or mechanical provenance marker
 
-#### Scenario: Paired samples share seeds
+### Requirement: Validated exactly-once actions
 
-- **WHEN** two candidate decklists are run against the same opponent with the same seed list
-- **THEN** each seed appears exactly once per candidate, so the samples can be paired seed-for-seed
+The referee SHALL validate seat, game, decision and state revision plus the complete legal answer before applying an action at most once.
 
-### Requirement: Structured per-game records
+#### Scenario: Stale answer refused
 
-The system SHALL emit one machine-readable record per game containing at minimum the winner, the losing reason, the turn count, elapsed milliseconds, the seed, the seat assignment, mulligan counts for both players, and the draw flag.
+- **WHEN** an answer names an old revision or another seat
+- **THEN** state remains unchanged and the mismatch is reported
 
-#### Scenario: Record is emitted per game
+#### Scenario: Duplicate answer
 
-- **WHEN** a batch of games completes
-- **THEN** each game has exactly one record, and no field required above is absent or empty
+- **WHEN** an accepted decision is submitted again
+- **THEN** the previous result is returned without executing another action
 
-#### Scenario: Engine output cannot be parsed
+### Requirement: Recorded outcomes and reconstruction
 
-- **WHEN** the engine emits output the system cannot parse into a complete record
-- **THEN** the system discards the batch rather than recording partial games, and reports the unparsed output
+The system SHALL journal accepted decisions and produce a structured game outcome. Reconstruction MUST replay recorded actions and refuse divergent prompts or state.
 
-### Requirement: Best-of-three matches with sideboarding
+#### Scenario: Completed game
 
-The system SHALL support running best-of-three matches in which the AI sideboards between games, and SHALL report whether sideboarding was active for a given batch.
+- **WHEN** a game ends normally
+- **THEN** its winner, reason, turns, identities and decision provenance are recorded
 
-#### Scenario: Sideboarding enabled
+#### Scenario: Replay divergence
 
-- **WHEN** a best-of-three batch is run with sideboarding enabled
-- **THEN** games after the first reflect a sideboarded deck, and each game record identifies its position in the match
+- **WHEN** reconstruction encounters a different decision or legal state
+- **THEN** it stops explicitly rather than inventing an action
 
-#### Scenario: Sideboarding state is always recorded
+### Requirement: External sideboarding
 
-- **WHEN** any batch completes
-- **THEN** its records state whether sideboarding was active, so games played with and without it are never pooled silently
+The system SHALL apply legal sideboard exchanges chosen by the pilot between games and record resulting deck identities.
 
-### Requirement: Worker parallelism bounded by memory
+#### Scenario: Postboard game
 
-The system SHALL run multiple games concurrently in separate engine processes, and SHALL cap the number of concurrent workers by available system memory rather than by processor count.
-
-#### Scenario: Worker count derived from memory
-
-- **WHEN** a batch is requested on a host with a known amount of free memory
-- **THEN** the system chooses a worker count whose combined memory ceiling fits within that free memory, and records the count used
-
-#### Scenario: A worker process dies
-
-- **WHEN** a worker process exits abnormally mid-batch
-- **THEN** the games it had not yet completed are re-queued or reported as unrun, and no partial game is recorded as a result
+- **WHEN** both pilots submit valid exchanges
+- **THEN** the next game uses the recorded postboard configurations without an AI sideboard plan

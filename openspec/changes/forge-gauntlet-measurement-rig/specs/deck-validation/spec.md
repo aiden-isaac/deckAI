@@ -2,76 +2,56 @@
 
 ## Purpose
 
-Decides whether a decklist can be measured at all — format legality, construction rules, presence in the installed card pool, and whether the pilot can actually play its cards — and withholds a score rather than returning a misleading one.
+Verifies that sourced Standard lists are constructible, legal in the dated paper snapshot and available in the installed rules engine before play.
 
 ## ADDED Requirements
 
-### Requirement: Format legality validation
+### Requirement: Three-source legality
 
-The system SHALL validate a decklist against the target format's legal set list and ban list as published by the installed engine, and SHALL reject any list containing a card that is not legal.
+The system SHALL require agreement between the pinned format definition, installed card pool and dated paper-legality source. Disagreements MUST be named rather than resolved silently.
 
-#### Scenario: Legal list passes
+#### Scenario: Legal list
 
-- **WHEN** a decklist contains only cards from legal sets with no banned cards
-- **THEN** validation passes and records the format definition version used
+- **WHEN** every card resolves and all legality sources agree
+- **THEN** the list passes with the source versions recorded
 
-#### Scenario: Banned card rejected
+#### Scenario: Disagreement
 
-- **WHEN** a decklist contains a card on the ban list
-- **THEN** validation fails and names the offending card and the reason
+- **WHEN** the paper source and installed format disagree
+- **THEN** the list is refused and the card and sources are named
 
-### Requirement: Construction rule validation
+### Requirement: Construction rules
 
-The system SHALL enforce the format's construction rules — minimum main-deck size, maximum sideboard size, and the per-card copy limit with its documented exceptions — independently of the engine, which does not check them in simulation mode.
+The system SHALL enforce the Standard minimum main size, maximum sideboard size and copy limits with documented card exceptions. Initial MVP profiles MUST freeze exactly 60 main and 15 sideboard cards.
 
-#### Scenario: Illegal copy count rejected
+#### Scenario: Invalid construction
 
-- **WHEN** a decklist contains five copies of a card that is limited to four
-- **THEN** validation fails and names the card and its count
+- **WHEN** a list violates a size or copy rule
+- **THEN** it is refused with the actual and allowed values
 
-#### Scenario: Undersized main deck rejected
+### Requirement: Runtime integrity
 
-- **WHEN** a decklist's main deck contains fewer cards than the format minimum
-- **THEN** validation fails and reports the actual and required sizes
+A run with missing validation or stripped/unsupported cards SHALL be invalid and SHALL NOT receive a scored result.
 
-### Requirement: Card pool availability validation
+#### Scenario: Stripped card
 
-The system SHALL verify that every card in a decklist exists in the installed engine's card pool before any game is played, because the engine silently removes unimplemented cards from the library and continues the game.
+- **WHEN** the engine removes a named card at runtime despite preflight validation
+- **THEN** the run is invalidated and the card is reported
 
-#### Scenario: Unimplemented card rejected before play
+### Requirement: Pilot warning attribution
 
-- **WHEN** a decklist names a card absent from the installed engine's card pool
-- **THEN** validation fails and names the card, and no games are run
+Stock-engine AI competence flags SHALL be labelled as stock-AI metadata and SHALL NOT be presented as proof about the external LLM pilot.
 
-#### Scenario: Engine reveals stripped cards at runtime
+#### Scenario: External pilot uses flagged card
 
-- **WHEN** the engine reports at game start that cards were unsupported and removed from a deck
-- **THEN** the system marks the run unscorable and reports which cards were stripped, even if validation had passed
+- **WHEN** a card carries a Forge AI competence flag
+- **THEN** the metadata is disclosed without silently removing the card or claiming the LLM cannot play it
 
-### Requirement: Pilot competence disclosure
+### Requirement: Postboard validation
 
-The system SHALL detect cards the pilot is known to play badly — including engine-declared AI-competence flags and the engine's runtime complaint list — and SHALL attach that disclosure to every result produced with those cards in the deck.
+Each proposed sideboard exchange SHALL use available cards, preserve deck totals and pass construction and legality checks before the next game.
 
-#### Scenario: Flagged card disclosed, not silently removed
+#### Scenario: Invalid exchange
 
-- **WHEN** a decklist contains a card the engine flags as one its AI cannot play well
-- **THEN** validation passes but the result records a pilot-competence warning naming that card
-
-#### Scenario: Warning accompanies the score
-
-- **WHEN** a result is reported for a deck containing flagged cards
-- **THEN** the pilot-competence warning appears alongside the win rate rather than in a separate log
-
-### Requirement: Withholding a score
-
-The system SHALL refuse to report a win rate for any run whose decks failed validation or whose runtime reveals indicated stripped cards, and SHALL report the reason in place of the number.
-
-#### Scenario: Invalid run yields no score
-
-- **WHEN** a completed run is found to have been played with a stripped or invalid deck
-- **THEN** the system reports the failure reason and does not report a win rate for that run
-
-#### Scenario: Validation result is part of the record
-
-- **WHEN** any run is recorded
-- **THEN** its record states which validation checks ran and whether each passed, so an unvalidated run is distinguishable from a validated one
+- **WHEN** a proposed exchange uses an absent card or inconsistent in/out counts
+- **THEN** the exchange is refused without changing the deck
