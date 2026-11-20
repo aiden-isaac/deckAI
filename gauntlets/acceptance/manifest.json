@@ -1,0 +1,24 @@
+{
+  "name": "acceptance-v1",
+  "description": "Fixed hand-authored Standard opponents for calibration, not a current metagame sample.",
+  "opponents": [
+    {
+      "id": "white-lifegain",
+      "deck": "white-lifegain.dck",
+      "sha256": "6c00e3a121d8f4be50a54b216552b7339cc55d36b22c8cc1d5361622f9417582",
+      "weight": 1
+    },
+    {
+      "id": "green-elves",
+      "deck": "green-elves.dck",
+      "sha256": "deb0c62e13109e067998a86b92b463e0eeb3966bfb4899176257984ffb4140fc",
+      "weight": 1
+    },
+    {
+      "id": "black-midrange",
+      "deck": "black-midrange.dck",
+      "sha256": "848e5c576895d4fe4191163bed6e19a48382e77648e2de621e824c8e4bf6597b",
+      "weight": 1
+    }
+  ]
+}
