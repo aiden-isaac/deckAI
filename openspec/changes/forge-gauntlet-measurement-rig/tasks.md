@@ -39,12 +39,12 @@ Group 6 is a hard gate: nothing in groups 8-10 starts until it passes.
 
 ## 5. Statistics
 
-- [ ] 5.1 Implement SPRT with declared bounds, error rates and a game cap, returning accept, reject or inconclusive plus the stopping reason; verify unit tests against hand-computed log-likelihood ratios and that a simulated 50/50 stream terminates inconclusive at the cap
-- [ ] 5.2 Implement paired fixed-sample comparison over shared seeds with effect size and confidence interval, excluding unpaired games; verify unit tests cover a known-effect synthetic dataset and that unpaired seeds are reported as excluded
-- [ ] 5.3 Implement weighted aggregation across the gauntlet plus per-matchup breakdown with intervals and a diagnostic-only marker below the resolvable sample size; verify a synthetic run where a 4%-weight matchup is marked diagnostic and the aggregate is not
-- [ ] 5.4 Implement the result-identity equality check that refuses to pool mismatched results, and verify pooling two results differing only in AI profile raises and names that field
-- [ ] 5.5 Implement re-scoring an accepted decision under alternative weightings with sign-flip detection, and verify a synthetic result that reverses under a second weighting is reported as metagame-contingent
-- [ ] 5.6 Write `docs/statistics.md` stating the minimum detectable effect, the sample sizes it implies and the stopping rules in use, and verify the documented numbers match the implementation's defaults
+- [x] 5.1 Implement SPRT with declared bounds, error rates and a game cap, returning accept, reject or inconclusive plus the stopping reason; verify unit tests against hand-computed log-likelihood ratios and that a simulated 50/50 stream terminates inconclusive at the cap
+- [x] 5.2 Implement paired fixed-sample comparison over shared seeds with effect size and confidence interval, excluding unpaired games; verify unit tests cover a known-effect synthetic dataset and that unpaired seeds are reported as excluded
+- [x] 5.3 Implement weighted aggregation across the gauntlet plus per-matchup breakdown with intervals and a diagnostic-only marker below the resolvable sample size; verify a synthetic run where a 4%-weight matchup is marked diagnostic and the aggregate is not
+- [x] 5.4 Implement the result-identity equality check that refuses to pool mismatched results, and verify pooling two results differing only in AI profile raises and names that field
+- [x] 5.5 Implement re-scoring an accepted decision under alternative weightings with sign-flip detection, and verify a synthetic result that reverses under a second weighting is reported as metagame-contingent
+- [x] 5.6 Write `docs/statistics.md` stating the minimum detectable effect, the sample sizes it implies and the stopping rules in use, and verify the documented numbers match the implementation's defaults
 
 ## 6. Acceptance gate — known-answer measurement test
 
