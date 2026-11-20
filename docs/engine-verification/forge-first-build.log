@@ -1,0 +1,350 @@
+START 2026-11-20T21:43:21+08:00 epoch=1795182201
+openjdk version "17.0.21.1" 2026-11-17
+OpenJDK Runtime Environment Temurin-17.0.21.1+2 (build 17.0.21.1+2)
+OpenJDK 64-Bit Server VM Temurin-17.0.21.1+2 (build 17.0.21.1+2, mixed mode, sharing)
+Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
+Maven home: /home/aiden/.local/opt/apache-maven-3.9.9
+Java version: 17.0.21.1, vendor: Eclipse Adoptium, runtime: /home/aiden/.local/opt/jdk-17.0.21.1+2
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Forge Parent                                                       [pom]
+[INFO] Forge Core                                                         [jar]
+[INFO] Forge Game                                                         [jar]
+[INFO] Forge AI                                                           [jar]
+[INFO] Forge Gui                                                          [jar]
+[INFO] Forge                                                              [jar]
+[INFO] 
+[INFO] ----------------------------< forge:forge >-----------------------------
+[INFO] Building Forge Parent 2.0.17-SNAPSHOT                              [1/6]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/3.1.0/maven-clean-plugin-3.1.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/3.1.0/maven-clean-plugin-3.1.0.pom (5.2 kB at 7.9 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/31/maven-plugins-31.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/31/maven-plugins-31.pom (10 kB at 117 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/3.1.0/maven-clean-plugin-3.1.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/3.1.0/maven-clean-plugin-3.1.0.jar (30 kB at 109 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/flatten-maven-plugin/1.6.0/flatten-maven-plugin-1.6.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/flatten-maven-plugin/1.6.0/flatten-maven-plugin-1.6.0.pom (11 kB at 165 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/mojo-parent/78/mojo-parent-78.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/mojo-parent/78/mojo-parent-78.pom (36 kB at 293 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/flatten-maven-plugin/1.6.0/flatten-maven-plugin-1.6.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/flatten-maven-plugin/1.6.0/flatten-maven-plugin-1.6.0.jar (122 kB at 188 kB/s)
+[INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge ---
+[INFO] Deleting /home/aiden/Projects/forge/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge ---
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/4.0.0/plexus-utils-4.0.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/4.0.0/plexus-utils-4.0.0.pom (8.7 kB at 18 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interpolation/1.27/plexus-interpolation-1.27.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interpolation/1.27/plexus-interpolation-1.27.pom (3.0 kB at 32 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/4.0.0/plexus-utils-4.0.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/4.0.0/plexus-utils-4.0.0.jar (192 kB at 191 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interpolation/1.27/plexus-interpolation-1.27.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interpolation/1.27/plexus-interpolation-1.27.jar (86 kB at 169 kB/s)
+[INFO] 
+[INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
+[INFO] 
+[INFO] --- checkstyle:3.1.2:check (checkstyle-validation) @ forge ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- install:3.0.1:install (default-install) @ forge ---
+[INFO] Installing /home/aiden/Projects/forge/pom.xml to /home/aiden/.m2/repository/forge/forge/2.0.17-SNAPSHOT/forge-2.0.17-SNAPSHOT.pom
+[INFO] 
+[INFO] --------------------------< forge:forge-core >--------------------------
+[INFO] Building Forge Core 2.0.17-SNAPSHOT                                [2/6]
+[INFO]   from forge-core/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge-core ---
+[INFO] Deleting /home/aiden/Projects/forge/forge-core/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge-core ---
+[INFO] 
+[INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge-core ---
+[INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
+[INFO] 
+[INFO] --- checkstyle:3.1.2:check (checkstyle-validation) @ forge-core ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ forge-core ---
+[INFO] skip non existing resourceDirectory /home/aiden/Projects/forge/forge-core/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.8.1:compile (default-compile) @ forge-core ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 156 source files to /home/aiden/Projects/forge/forge-core/target/classes
+[INFO] /home/aiden/Projects/forge/forge-core/src/main/java/forge/util/PredicateString.java: Some input files use or override a deprecated API.
+[INFO] /home/aiden/Projects/forge/forge-core/src/main/java/forge/util/PredicateString.java: Recompile with -Xlint:deprecation for details.
+[INFO] /home/aiden/Projects/forge/forge-core/src/main/java/forge/StaticData.java: Some input files use unchecked or unsafe operations.
+[INFO] /home/aiden/Projects/forge/forge-core/src/main/java/forge/StaticData.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ forge-core ---
+[INFO] skip non existing resourceDirectory /home/aiden/Projects/forge/forge-core/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ forge-core ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ forge-core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ forge-core ---
+[INFO] Building jar: /home/aiden/Projects/forge/forge-core/target/forge-core-2.0.17-SNAPSHOT.jar
+[INFO] 
+[INFO] --- install:3.0.1:install (default-install) @ forge-core ---
+[INFO] Installing /home/aiden/Projects/forge/forge-core/pom.xml to /home/aiden/.m2/repository/forge/forge-core/2.0.17-SNAPSHOT/forge-core-2.0.17-SNAPSHOT.pom
+[INFO] Installing /home/aiden/Projects/forge/forge-core/target/forge-core-2.0.17-SNAPSHOT.jar to /home/aiden/.m2/repository/forge/forge-core/2.0.17-SNAPSHOT/forge-core-2.0.17-SNAPSHOT.jar
+[INFO] 
+[INFO] --------------------------< forge:forge-game >--------------------------
+[INFO] Building Forge Game 2.0.17-SNAPSHOT                                [3/6]
+[INFO]   from forge-game/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge-game ---
+[INFO] Deleting /home/aiden/Projects/forge/forge-game/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge-game ---
+[INFO] 
+[INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge-game ---
+[INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
+[INFO] 
+[INFO] --- checkstyle:3.1.2:check (checkstyle-validation) @ forge-game ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ forge-game ---
+[INFO] skip non existing resourceDirectory /home/aiden/Projects/forge/forge-game/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.8.1:compile (default-compile) @ forge-game ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 830 source files to /home/aiden/Projects/forge/forge-game/target/classes
+[INFO] /home/aiden/Projects/forge/forge-game/src/main/java/forge/game/GameLog.java: Some input files use or override a deprecated API.
+[INFO] /home/aiden/Projects/forge/forge-game/src/main/java/forge/game/GameLog.java: Recompile with -Xlint:deprecation for details.
+[INFO] /home/aiden/Projects/forge/forge-game/src/main/java/forge/game/trigger/TriggerAttackerBlocked.java: Some input files use unchecked or unsafe operations.
+[INFO] /home/aiden/Projects/forge/forge-game/src/main/java/forge/game/trigger/TriggerAttackerBlocked.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ forge-game ---
+[INFO] skip non existing resourceDirectory /home/aiden/Projects/forge/forge-game/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ forge-game ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 5 source files to /home/aiden/Projects/forge/forge-game/target/test-classes
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ forge-game ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ forge-game ---
+[INFO] Building jar: /home/aiden/Projects/forge/forge-game/target/forge-game-2.0.17-SNAPSHOT.jar
+[INFO] 
+[INFO] --- install:3.0.1:install (default-install) @ forge-game ---
+[INFO] Installing /home/aiden/Projects/forge/forge-game/pom.xml to /home/aiden/.m2/repository/forge/forge-game/2.0.17-SNAPSHOT/forge-game-2.0.17-SNAPSHOT.pom
+[INFO] Installing /home/aiden/Projects/forge/forge-game/target/forge-game-2.0.17-SNAPSHOT.jar to /home/aiden/.m2/repository/forge/forge-game/2.0.17-SNAPSHOT/forge-game-2.0.17-SNAPSHOT.jar
+[INFO] 
+[INFO] ---------------------------< forge:forge-ai >---------------------------
+[INFO] Building Forge AI 2.0.17-SNAPSHOT                                  [4/6]
+[INFO]   from forge-ai/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge-ai ---
+[INFO] Deleting /home/aiden/Projects/forge/forge-ai/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge-ai ---
+[INFO] 
+[INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge-ai ---
+[INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
+[INFO] 
+[INFO] --- checkstyle:3.1.2:check (checkstyle-validation) @ forge-ai ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ forge-ai ---
+[INFO] skip non existing resourceDirectory /home/aiden/Projects/forge/forge-ai/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.8.1:compile (default-compile) @ forge-ai ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 258 source files to /home/aiden/Projects/forge/forge-ai/target/classes
+[INFO] /home/aiden/Projects/forge/forge-ai/src/main/java/forge/ai/AiController.java: Some input files use or override a deprecated API.
+[INFO] /home/aiden/Projects/forge/forge-ai/src/main/java/forge/ai/AiController.java: Recompile with -Xlint:deprecation for details.
+[INFO] /home/aiden/Projects/forge/forge-ai/src/main/java/forge/ai/AiCardMemory.java: Some input files use unchecked or unsafe operations.
+[INFO] /home/aiden/Projects/forge/forge-ai/src/main/java/forge/ai/AiCardMemory.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ forge-ai ---
+[INFO] skip non existing resourceDirectory /home/aiden/Projects/forge/forge-ai/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ forge-ai ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ forge-ai ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ forge-ai ---
+[INFO] Building jar: /home/aiden/Projects/forge/forge-ai/target/forge-ai-2.0.17-SNAPSHOT.jar
+[INFO] 
+[INFO] --- install:3.0.1:install (default-install) @ forge-ai ---
+[INFO] Installing /home/aiden/Projects/forge/forge-ai/pom.xml to /home/aiden/.m2/repository/forge/forge-ai/2.0.17-SNAPSHOT/forge-ai-2.0.17-SNAPSHOT.pom
+[INFO] Installing /home/aiden/Projects/forge/forge-ai/target/forge-ai-2.0.17-SNAPSHOT.jar to /home/aiden/.m2/repository/forge/forge-ai/2.0.17-SNAPSHOT/forge-ai-2.0.17-SNAPSHOT.jar
+[INFO] 
+[INFO] --------------------------< forge:forge-gui >---------------------------
+[INFO] Building Forge Gui 2.0.17-SNAPSHOT                                 [5/6]
+[INFO]   from forge-gui/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge-gui ---
+[INFO] Deleting /home/aiden/Projects/forge/forge-gui/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge-gui ---
+[INFO] 
+[INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge-gui ---
+[INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
+[INFO] 
+[INFO] --- checkstyle:3.1.2:check (checkstyle-validation) @ forge-gui ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ forge-gui ---
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.8.1:compile (default-compile) @ forge-gui ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 472 source files to /home/aiden/Projects/forge/forge-gui/target/classes
+[INFO] /home/aiden/Projects/forge/forge-gui/src/main/java/forge/gamemodes/match/input/InputQueue.java: Some input files use or override a deprecated API.
+[INFO] /home/aiden/Projects/forge/forge-gui/src/main/java/forge/gamemodes/match/input/InputQueue.java: Recompile with -Xlint:deprecation for details.
+[INFO] /home/aiden/Projects/forge/forge-gui/src/main/java/forge/gamemodes/match/input/InputSelectEntitiesFromList.java: Some input files use unchecked or unsafe operations.
+[INFO] /home/aiden/Projects/forge/forge-gui/src/main/java/forge/gamemodes/match/input/InputSelectEntitiesFromList.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ forge-gui ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ forge-gui ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 8 source files to /home/aiden/Projects/forge/forge-gui/target/test-classes
+[INFO] /home/aiden/Projects/forge/forge-gui/src/test/java/forge/gamemodes/replay/ReplayRecordingShould.java: Some input files use or override a deprecated API.
+[INFO] /home/aiden/Projects/forge/forge-gui/src/test/java/forge/gamemodes/replay/ReplayRecordingShould.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ forge-gui ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ forge-gui ---
+[INFO] Building jar: /home/aiden/Projects/forge/forge-gui/target/forge-gui-2.0.17-SNAPSHOT.jar
+[INFO] 
+[INFO] --- install:3.0.1:install (default-install) @ forge-gui ---
+[INFO] Installing /home/aiden/Projects/forge/forge-gui/pom.xml to /home/aiden/.m2/repository/forge/forge-gui/2.0.17-SNAPSHOT/forge-gui-2.0.17-SNAPSHOT.pom
+[INFO] Installing /home/aiden/Projects/forge/forge-gui/target/forge-gui-2.0.17-SNAPSHOT.jar to /home/aiden/.m2/repository/forge/forge-gui/2.0.17-SNAPSHOT/forge-gui-2.0.17-SNAPSHOT.jar
+[INFO] 
+[INFO] ----------------------< forge:forge-gui-desktop >-----------------------
+[INFO] Building Forge 2.0.17-SNAPSHOT                                     [6/6]
+[INFO]   from forge-gui-desktop/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge-gui-desktop ---
+[INFO] Deleting /home/aiden/Projects/forge/forge-gui-desktop/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge-gui-desktop ---
+[INFO] 
+[INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge-gui-desktop ---
+[INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
+[INFO] 
+[INFO] --- checkstyle:3.1.2:check (checkstyle-validation) @ forge-gui-desktop ---
+[INFO] Starting audit...
+Audit done.
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- build-helper:3.6.0:released-version (released-version) @ forge-gui-desktop ---
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/forge/forge-gui-desktop/maven-metadata.xml
+[INFO] 
+[INFO] --- build-helper:3.6.0:parse-version (parse-version) @ forge-gui-desktop ---
+[INFO] 
+[INFO] --- build-helper:3.6.0:timestamp-property (timestamp-property) @ forge-gui-desktop ---
+[WARNING] Using platform locale (en_US actually) to format date/time, i.e. build is platform dependent!
+[INFO] 
+[INFO] --- build-helper:3.6.0:regex-property (regex-property) @ forge-gui-desktop ---
+[INFO] 
+[INFO] --- groovy:2.1.1:execute (get-changelog-from-tag) @ forge-gui-desktop ---
+WARNING: No forge- tags found. CHANGES.txt will be empty.
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ forge-gui-desktop ---
+[INFO] Copying 2 resources from filters to target/classes
+[INFO] 
+[INFO] --- compiler:3.8.1:compile (default-compile) @ forge-gui-desktop ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 411 source files to /home/aiden/Projects/forge/forge-gui-desktop/target/classes
+[INFO] /home/aiden/Projects/forge/forge-gui-desktop/src/main/java/forge/itemmanager/ItemManager.java: Some input files use or override a deprecated API.
+[INFO] /home/aiden/Projects/forge/forge-gui-desktop/src/main/java/forge/itemmanager/ItemManager.java: Recompile with -Xlint:deprecation for details.
+[INFO] /home/aiden/Projects/forge/forge-gui-desktop/src/main/java/forge/screens/home/PlayerPanel.java: Some input files use unchecked or unsafe operations.
+[INFO] /home/aiden/Projects/forge/forge-gui-desktop/src/main/java/forge/screens/home/PlayerPanel.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ forge-gui-desktop ---
+[INFO] skip non existing resourceDirectory /home/aiden/Projects/forge/forge-gui-desktop/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ forge-gui-desktop ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 262 source files to /home/aiden/Projects/forge/forge-gui-desktop/target/test-classes
+[INFO] /home/aiden/Projects/forge/forge-gui-desktop/src/test/java/forge/gamemodes/net/WireDeserializationTest.java: /home/aiden/Projects/forge/forge-gui-desktop/src/test/java/forge/gamemodes/net/WireDeserializationTest.java uses or overrides a deprecated API.
+[INFO] /home/aiden/Projects/forge/forge-gui-desktop/src/test/java/forge/gamemodes/net/WireDeserializationTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] /home/aiden/Projects/forge/forge-gui-desktop/src/test/java/forge/gamesimulationtests/util/PerfPatchUnitTest.java: Some input files use unchecked or unsafe operations.
+[INFO] /home/aiden/Projects/forge/forge-gui-desktop/src/test/java/forge/gamesimulationtests/util/PerfPatchUnitTest.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ forge-gui-desktop ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ forge-gui-desktop ---
+[INFO] Building jar: /home/aiden/Projects/forge/forge-gui-desktop/target/forge-gui-desktop-2.0.17-SNAPSHOT.jar
+[INFO] 
+[INFO] --- launch4j:2.5.1:launch4j (l4j-gui) @ forge-gui-desktop ---
+[WARNING] jre.path not set, defaulting to "%JAVA_HOME%;%PATH%"
+[INFO] Found launch4j version 3.50
+[INFO] Platform-specific work directory already exists: /home/aiden/.m2/repository/net/sf/launch4j/launch4j/3.50/launch4j-3.50-workdir-linux64
+[INFO] Using workdir /home/aiden/.m2/repository/net/sf/launch4j/launch4j/3.50/launch4j-3.50-workdir-linux64
+[INFO] launch4j: Compiling resources
+[INFO] launch4j: Linking
+[INFO] launch4j: Successfully created /home/aiden/Projects/forge/forge-gui-desktop/target/forge.exe
+[INFO] 
+[INFO] --- replacer:1.5.3:replace (default) @ forge-gui-desktop ---
+[INFO] Replacement run on 3 files.
+[INFO] 
+[INFO] --- assembly:3.3.0:single (make-assembly) @ forge-gui-desktop ---
+[INFO] Reading assembly descriptor: src/main/assembly/jar-with-dependencies.xml
+[INFO] Building jar: /home/aiden/Projects/forge/forge-gui-desktop/target/forge-gui-desktop-2.0.17-SNAPSHOT-jar-with-dependencies.jar
+[INFO] 
+[INFO] --- git-changelog-maven-plugin:2.2.0:git-changelog (GenerateGitChangelog) @ forge-gui-desktop ---
+[INFO] Extended variables:
+[INFO] #
+[INFO] # Wrote: /home/aiden/Projects/forge/forge-gui-desktop/target/CHANGES.txt
+[INFO] #
+[INFO] 
+[INFO] --- install:3.0.1:install (default-install) @ forge-gui-desktop ---
+[INFO] Installing /home/aiden/Projects/forge/forge-gui-desktop/pom.xml to /home/aiden/.m2/repository/forge/forge-gui-desktop/2.0.17-SNAPSHOT/forge-gui-desktop-2.0.17-SNAPSHOT.pom
+[INFO] Installing /home/aiden/Projects/forge/forge-gui-desktop/target/forge-gui-desktop-2.0.17-SNAPSHOT.jar to /home/aiden/.m2/repository/forge/forge-gui-desktop/2.0.17-SNAPSHOT/forge-gui-desktop-2.0.17-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Forge Parent 2.0.17-SNAPSHOT:
+[INFO] 
+[INFO] Forge Parent ....................................... SUCCESS [  4.679 s]
+[INFO] Forge Core ......................................... SUCCESS [  5.425 s]
+[INFO] Forge Game ......................................... SUCCESS [ 10.997 s]
+[INFO] Forge AI ........................................... SUCCESS [  8.159 s]
+[INFO] Forge Gui .......................................... SUCCESS [  6.977 s]
+[INFO] Forge .............................................. SUCCESS [ 18.890 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  55.277 s
+[INFO] Finished at: 2026-11-20T21:44:17+08:00
+[INFO] ------------------------------------------------------------------------
+
+real	0m55.954s
+user	2m36.492s
+sys	0m5.607s
+EXIT=0
+END 2026-11-20T21:44:17+08:00 epoch=1795182257
