@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+*.egg-info/
+
+# Run data: JSONL is the source of truth but runs are large and machine-local
+data/
+!data/.gitkeep
+
+# Cached third-party card data (re-downloadable, large)
+cache/
+!cache/.gitkeep
+
+# Engine build logs
+*.build.log

@@ -67,7 +67,10 @@ Group 6 is a hard gate: nothing in groups 8-10 starts until it passes.
 ## 8. Pilot policy for the donate combo
 
 - [ ] 8.1 Read and document `ControlGainAi`'s existing `DonateJunk` behaviour in `docs/pilot-donate.md`, naming the methods and the evaluation it performs, and verify the description matches the pinned source
-- [ ] 8.2 Implement a new `DonateLethal` AI logic branch preferring donation of a permanent whose own resolution makes its controller lose, with fallback to `DonateJunk` behaviour, and verify a unit or scripted game shows Kobayashi Maru Scenario donated in preference to a Food token
+- [ ] 8.2 Implement a new `DonateLethal` AI logic branch covering all three rules — decline when nothing harmful is available, prefer a permanent whose next pending effect harms its controller, and apply the timing guard — with fallback to `DonateJunk` behaviour; verify unit or scripted games show each branch
+- [ ] 8.2a Verify the modal case: Kobayashi Maru Scenario is donated once only the losing mode remains unchosen, and is **not** donated while Hail, Sensors or Transport are still available
+- [ ] 8.2b Verify the Saga case: The Naked Time is donated at exactly two lore counters so the opponent takes chapter III's land sacrifice, and is **not** donated at zero or one counter
+- [ ] 8.2c Verify the decline case: with only a Food token and beneficial permanents in play, Iroh's trigger resolves with no target chosen and the game continues
 - [ ] 8.3 Add a card-script overlay pointing Iroh's abilities at `DonateLethal` without modifying shared `DonateJunk` behaviour, and verify Coveted Falcon and Jon Irenicus card scripts are untouched
 - [ ] 8.4 Implement the opt-in declaration and recording of deck-specific pilot logic in the run identity, and verify pooling a `DonateLethal` run with a stock-AI run is refused and names the logic
 - [ ] 8.5 Implement win-condition-execution-rate instrumentation driven by the deck's declared win condition, and verify a donate-deck run reports the rate at which the opponent lost to the donated permanent alongside the win rate

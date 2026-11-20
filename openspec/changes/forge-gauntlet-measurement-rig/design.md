@@ -69,11 +69,19 @@ Pilot-competence flags (`AI:RemoveDeck`, `SVar:AI`, and the runtime `complainCar
 
 Add a new AI logic branch (working name `DonateLethal`) in `ControlGainAi`, and point Iroh's card script at it via a **card-script overlay** — a patched copy of the one card file — rather than editing `DonateJunk`, which three other cards use.
 
-The logic: when evaluating a donation, prefer a permanent the opponent would be forced to keep whose own resolution makes its controller lose, provided the opponent's next upkeep arrives before the donating player's own loss condition. Fall back to `DonateJunk` behaviour when no such permanent exists.
+The logic has three parts, mirroring the three rules in the `pilot-policy` spec:
 
-*Alternatives considered:* (i) change `DonateJunk` itself — rejected, it silently alters Coveted Falcon and Jon Irenicus and makes our results incomparable with anyone else's; (ii) hardcode "if you control Kobayashi Maru Scenario, donate it" — rejected, it measures a special case rather than the strategy, and would not transfer to any other donate payload the deck explores.
+1. **Declining is a first-class choice.** Iroh's trigger is `OptionalDecider$ You` with chosen targets, so "donate nothing" is always legal and is correct whenever no permanent has a pending harmful effect. Donating a useful permanent is strictly worse than donating nothing.
+2. **Prefer a permanent whose *next* pending effect harms its controller.** Two concrete shapes to detect against the pinned source:
+   - *Modal upkeep trigger with `ChoiceRestriction$ ThisGame`* (Kobayashi Maru Scenario): donate once every mode except the one that makes its controller lose has been chosen, so the new controller is forced into it on their upkeep. Donating earlier hands the opponent a card-draw, a bounce or two tokens instead.
+   - *Saga whose final chapter harms its controller* (The Naked Time, chapter III sacrifices a land): donate when lore counters are exactly one short of that chapter, so the opponent receives only the sacrifice. Donating at one counter would give them the beneficial chapter II first.
+3. **Timing guard.** Donate only when the harmful effect resolves under the new controller before the pilot would suffer it — i.e. the opponent's next upkeep precedes the pilot's. For an upkeep-triggered permanent donated at the pilot's beginning of combat, this holds; the guard exists so the logic cannot talk itself into a donation that kills the pilot first.
 
-*Accepted limitation:* this is a heuristic, not a solver. It will not find the whole line (set up, protect, donate, deny the escape modes). The `pilot-policy` spec's win-condition-execution-rate requirement exists precisely so we can see how often it succeeds instead of assuming it.
+Fall back to `DonateJunk` behaviour when no permanent qualifies and the effect is not optional.
+
+*Alternatives considered:* (i) change `DonateJunk` itself — rejected, it silently alters Coveted Falcon and Jon Irenicus and makes our results incomparable with anyone else's; (ii) hardcode "if you control Kobayashi Maru Scenario, donate it" — rejected, it measures a special case rather than the strategy, and would not transfer to any other donate payload the deck explores. The two detection shapes above are deliberately written against card *structure* (a modal upkeep trigger with an exhausting choice restriction; a Saga with a harmful final chapter) rather than against card names, so a new payload with the same shape is picked up for free.
+
+*Accepted limitation:* this is a heuristic over the current board, not a solver. It decides *what and when to donate* correctly; it does not plan the whole line (develop, protect Iroh, hold up interaction, deny the escape). The `pilot-policy` spec's win-condition-execution-rate requirement exists precisely so we can see how often the full line comes together instead of assuming it.
 
 ### D7. JSONL as the source of truth, SQLite as the index
 
