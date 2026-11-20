@@ -5,11 +5,11 @@ Group 6 is a hard gate: nothing in groups 8-10 starts until it passes.
 
 ## 1. Pinned engine and build environment
 
-- [ ] 1.1 Install Maven from the binary tarball into `~/.local` (no root) and verify `mvn -version` reports a version and resolves a JDK
-- [ ] 1.2 Determine the JDK version Forge's `pom.xml` targets; if the system Java 27 is unsupported, install a supported JDK under `~/.local` and verify `JAVA_HOME=<path> java -version` matches the target
-- [ ] 1.3 Pin the engine: record the cloned Forge commit SHA, upstream tag and card-data version into `forge-patches/PIN.md`, create branch `deckai-patches` from it, and verify `git -C /home/aiden/Projects/forge log -1` matches the recorded SHA
-- [ ] 1.4 Build unpatched Forge headlessly and verify `java -jar <built jar> sim -d <deck1> <deck2> -n 1 -q` completes one game and prints a result line (expect a long first build on a 1 Mbps link; capture the build log)
-- [ ] 1.5 Write `docs/engine-setup.md` recording the exact build command, JDK, Maven version, jar path and first-build wall time, and verify a fresh shell can reproduce the run command from the doc alone
+- [x] 1.1 Install Maven from the binary tarball into `~/.local` (no root) and verify `mvn -version` reports a version and resolves a JDK
+- [x] 1.2 Determine the JDK version Forge's `pom.xml` targets; if the system Java 27 is unsupported, install a supported JDK under `~/.local` and verify `JAVA_HOME=<path> java -version` matches the target
+- [x] 1.3 Pin the engine: record the cloned Forge commit SHA, upstream tag and card-data version into `forge-patches/PIN.md`, create branch `deckai-patches` from it, and verify `git -C /home/aiden/Projects/forge log -1` matches the recorded SHA
+- [x] 1.4 Build unpatched Forge headlessly and verify `java -jar <built jar> sim -d <deck1> <deck2> -n 1 -q` completes one game and prints a result line (expect a long first build on a 1 Mbps link; capture the build log)
+- [x] 1.5 Write `docs/engine-setup.md` recording the exact build command, JDK, Maven version, jar path and first-build wall time, and verify a fresh shell can reproduce the run command from the doc alone
 
 ## 2. Engine patches for measurable output
 
