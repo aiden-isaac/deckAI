@@ -3,7 +3,9 @@ name = "deckai"
 version = "0.1.0"
 description = "Measure Magic: The Gathering decklists by simulated play on a pinned Forge engine"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "jsonschema>=4,<5",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
