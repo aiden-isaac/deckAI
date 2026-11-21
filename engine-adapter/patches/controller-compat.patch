@@ -1,0 +1,37 @@
+--- a/forge-overlay/forge-gui-desktop/src/main/java/forge/spike/LlmSpikeGui.java
++++ b/forge-overlay/forge-gui-desktop/src/main/java/forge/spike/LlmSpikeGui.java
+@@ -5778,6 +5778,7 @@
+             final Player ai = getPlayer();
+             final Card source = sa.getHostCard();
+             final Game game = source.getGame();
++            final int waitingMark = game.getTriggerHandler().getWaitingTriggerCount();
+             final forge.game.zone.Zone hz = source.isCopiedSpell() ? null : source.getZone();
+             final int hzPos = hz == null ? 0 : hz.getCards().indexOf(source);
+             // What a play that does not happen is rolled back to: the zone a cast left, none for an ability (the human
+@@ -5808,7 +5809,7 @@
+                 p("[ROUTER] play: " + labelOf(sa) + " is forbidden by a static -> nothing was played");
+                 failedInWindow.add(chosenKey);
+                 playsNotMade++;
+-                forge.game.GameActionUtil.rollbackAbility(sa, castFrom, hzPos, new CostPayment(sa.getPayCosts(), sa), source);
++                forge.game.GameActionUtil.rollbackAbility(sa, castFrom, hzPos, new CostPayment(sa.getPayCosts(), sa), source, waitingMark);
+                 return true;
+             }
+             if (sa.getApi() == ApiType.Charm && !modesChosen && !forge.game.ability.effects.CharmEffect.makeChoices(sa)) {
+@@ -5832,7 +5833,7 @@
+                     p("[ROUTER] play: " + labelOf(sa) + " paid but has no legal target -> the stack refused it");
+                     failedInWindow.add(chosenKey);
+                     playsNotMade++;
+-                    forge.game.GameActionUtil.rollbackAbility(sa, castFrom, hzPos, pay, source);
++                    forge.game.GameActionUtil.rollbackAbility(sa, castFrom, hzPos, pay, source, waitingMark);
+                     return true;
+                 }
+                 playSeen(sa, hz);
+@@ -5869,7 +5870,7 @@
+             // was cast FROM was the Stack, so a failed cast from hand stayed in the Stack zone with nothing on the stack.
+             // The rollback refunds the mana paid and clears the freeze but not the play it was for, so the stack is
+             // unfrozen here as PlaySpellAbility.playAbility does; else the next play would stay frozen.
+-            forge.game.GameActionUtil.rollbackAbility(sa, castFrom, hzPos, pay, source);
++            forge.game.GameActionUtil.rollbackAbility(sa, castFrom, hzPos, pay, source, waitingMark);
+             if (!refreeze) game.getStack().unfreezeStack();
+             return true;
+         }

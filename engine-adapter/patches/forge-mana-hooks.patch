@@ -1,0 +1,161 @@
+--- a/forge-ai/src/main/java/forge/ai/ComputerUtilMana.java
++++ b/forge-ai/src/main/java/forge/ai/ComputerUtilMana.java
+@@ -56,6 +56,13 @@
+ import java.util.stream.Collectors;
+ 
+ public class ComputerUtilMana {
++    /** External controllers select real activations; probes never ask or consume a reply. */
++    public interface ExternalManaController {
++        SpellAbility chooseManaSource(SpellAbility payingFor, ManaCostShard shard, List<SpellAbility> legal);
++    }
++
++    public static java.util.function.Predicate<Player> HARNESS_SEAT_CHOOSES_ANY_COLOR = p -> false;
++    public static java.util.function.Predicate<Player> HARNESS_SEAT_PAYS_BY_RULES = p -> false;
+     private final static boolean DEBUG_MANA_PAYMENT = false;
+ 
+     /**
+@@ -358,6 +365,9 @@
+                     maList = filteredList;
+                     break;
+                 case "NotSameCard":
++                    // HARNESS PATCH (docs/harness/ENGINE-PATCHES.md): a taste, not a rule; Basalt Monolith may pay
++                    // for its own "{3}: Untap" with its own mana.
++                    if (HARNESS_SEAT_PAYS_BY_RULES.test(ai)) break;
+                     String hostName = sa.getHostCard().getName();
+                     maList = filteredList.stream()
+                             .filter(saPay -> !saPay.getHostCard().getName().equals(hostName))
+@@ -377,7 +387,12 @@
+ 
+         for (final SpellAbility ma : maList) {
+             // this rarely seems like a good idea
+-            if (ma.getHostCard() == saHost) {
++            // HARNESS PATCH (docs/harness/ENGINE-PATCHES.md): a taste, not a rule; a harness seat may pay with the
++            // ability's own card (Mishra's Factory tapping itself for its {1} animate, rules pilot RP_175), but not
++            // when both the ability and the mana ability tap it (Rishadan Port, runs/loop/g27).
++            if (ma.getHostCard() == saHost && (!HARNESS_SEAT_PAYS_BY_RULES.test(ai)
++                    || (sa.getPayCosts() != null && sa.getPayCosts().hasTapCost()
++                        && ma.getPayCosts().hasTapCost()))) {
+                 continue;
+             }
+ 
+@@ -642,11 +657,32 @@
+ 
+         // A filter's own cost is paid in the middle of another payment, which still needs what it has set aside.
+         // The filter is among that; if it isn't, the ability is being activated on its own and starts afresh like any other.
+-        if (test || !sa.isManaAbility() || !AiCardMemory.isRememberedCard(ai, sa.getHostCard(), MemorySet.PAYS_TAP_COST)) {
++        final boolean startsAfresh = test || !sa.isManaAbility() || !AiCardMemory.isRememberedCard(ai, sa.getHostCard(), MemorySet.PAYS_TAP_COST);
++        if (startsAfresh) {
+             AiCardMemory.clearMemorySet(ai, MemorySet.PAYS_TAP_COST);
+             AiCardMemory.clearMemorySet(ai, MemorySet.PAYS_SAC_COST);
+         }
+-        adjustManaCostToAvoidNegEffects(cost, sa.getHostCard(), ai);
++        // HARNESS PATCH (docs/harness/ENGINE-PATCHES.md): the colour that avoids a card's drawback (Court Hussar: {W})
++        // is steering, not a rule: a harness seat keeps it while the reshaped cost can be paid, and otherwise pays the
++        // unadjusted cost and takes the drawback. The test ends because adjustManaCostToAvoidNegEffects is idempotent
++        // (the reshaped copy is already reshaped). It runs only on a fresh start, as it clears what a payment in
++        // progress has set aside, and only with an empty mana pool: two kinds floating would reach the seat's pool
++        // chooser, a model ask while testing. Otherwise (a payment in progress, or mana floating) the seat pays the
++        // unadjusted cost: its steering is dropped there, where upstream still reshapes.
++        if (!HARNESS_SEAT_PAYS_BY_RULES.test(ai)) {
++            adjustManaCostToAvoidNegEffects(cost, sa.getHostCard(), ai);
++        } else if (startsAfresh && ai.getManaPool().isEmpty()) {
++            ManaCostBeingPaid reshaped = new ManaCostBeingPaid(cost);
++            adjustManaCostToAvoidNegEffects(reshaped, sa.getHostCard(), ai);
++            if (reshaped.getGenericManaAmount() != cost.getGenericManaAmount()) {
++                boolean payable = payManaCost(reshaped, sa, ai, true, checkPlayable, effect) != null;
++                AiCardMemory.clearMemorySet(ai, MemorySet.PAYS_TAP_COST);
++                AiCardMemory.clearMemorySet(ai, MemorySet.PAYS_SAC_COST);
++                if (payable) {
++                    adjustManaCostToAvoidNegEffects(cost, sa.getHostCard(), ai);
++                }
++            }
++        }
+ 
+         List<Mana> manaSpentToPay = test ? new ArrayList<>() : sa.getPayingMana();
+         List<SpellAbility> paymentList = Lists.newArrayList();
+@@ -753,16 +789,28 @@
+             // Manabarbs and its kin: this is the final ordering, after mana preferences and multi-mana requirements
+             saList = painfulSourcesLast(saList, ai, painSources);
+ 
+-            SpellAbility saPayment = saList.isEmpty() ? null : chooseManaAbility(cost, sa, ai, toPay, saList, checkPlayable || !test, paymentList);
+-
+-            if (saPayment != null && ComputerUtilCost.isSacrificeSelfCost(saPayment.getPayCosts()) && sa.isTargeting(saPayment.getHostCard())) {
++            final SpellAbility saPayment;
++            if (!test && ai.getController() instanceof ExternalManaController) {
++                List<SpellAbility> legal = new ArrayList<>();
++                for (SpellAbility candidate : saList) {
++                    if (chooseManaAbility(cost, sa, ai, toPay, Collections.singletonList(candidate), true, paymentList) != null)
++                        legal.add(candidate);
++                }
++                saPayment = ((ExternalManaController) ai.getController()).chooseManaSource(sa, toPay, Collections.unmodifiableList(legal));
++                if (saPayment == null || !legal.contains(saPayment))
++                    throw new IllegalStateException("External mana selection did not name an offered source");
++            } else {
++                saPayment = saList.isEmpty() ? null : chooseManaAbility(cost, sa, ai, toPay, saList, checkPlayable || !test, paymentList);
++            }
++
++            if (saPayment != null && ComputerUtilCost.isSacrificeSelfCost(saPayment.getPayCosts()) && sa.isTargeting(saPayment.getHostCard()) && !HARNESS_SEAT_PAYS_BY_RULES.test(ai)) {
+                 // not a good idea to sac a card that you're targeting with the SA you're paying for
+                 saExcludeList.add(saPayment);
+                 continue;
+             }
+ 
+             // a human may spend a Lotus on any spell, so auto-pay and the playable scan must count it
+-            if (saPayment != null && ai.isAI() && "BlackLotus".equals(saPayment.getParam("AILogic")) && !SpecialCardAi.BlackLotus.consider(ai, sa, cost)) {
++            if (saPayment != null && ai.isAI() && !HARNESS_SEAT_PAYS_BY_RULES.test(ai) && "BlackLotus".equals(saPayment.getParam("AILogic")) && !SpecialCardAi.BlackLotus.consider(ai, sa, cost)) {
+                 // since we checked this already, do not loop indefinitely checking again
+                 saExcludeList.add(saPayment);
+                 continue;
+@@ -779,7 +827,9 @@
+                     phyLifeToPay += 2;
+                 }
+ 
+-                if (sa.hasParam("AIPhyrexianPayment")) {
++                // HARNESS PATCH (docs/harness/ENGINE-PATCHES.md): the hint is Forge's AI advice (Gut Shot, Mental
++                // Misstep); a harness seat may pay the life.
++                if (sa.hasParam("AIPhyrexianPayment") && !HARNESS_SEAT_PAYS_BY_RULES.test(ai)) {
+                     if ("Never".equals(sa.getParam("AIPhyrexianPayment"))) {
+                         break; // unwise to pay
+                     } else if (sa.getParam("AIPhyrexianPayment").startsWith("OnFatalDamage.")) {
+@@ -1516,6 +1566,12 @@
+         }
+ 
+         if (m.isAnyMana()) {
++            // HARNESS PATCH (docs/harness/ENGINE-PATCHES.md): a generic shard can be paid with any colour, so for a
++            // seat that chooses its own colours the colour is left open and ManaEffect asks its controller.
++            if (toPay == ManaCostShard.GENERIC && HARNESS_SEAT_CHOOSES_ANY_COLOR.test(ai)) {
++                m.setExpressChoice("");
++                return true;
++            }
+             byte colorChoice = 0;
+             if (toPay.isOr2Generic()) {
+                 colorChoice = toPay.getColorMask();
+@@ -2126,6 +2182,10 @@
+ 
+         final CardCollection otherManaSources = new CardCollection();
+         final CardCollection useLastManaSources = new CardCollection();
++        // HARNESS PATCH (docs/harness/ENGINE-PATCHES.md): a source whose tap damage is lethal pays after every other
++        // source, the "use last" ones included, which are sorted by creature value and so keep no order among
++        // non-creatures (#269: City of Brass at 1 life paid before Ashnod's Altar).
++        final CardCollection lethalManaSources = new CardCollection();
+         final CardCollection colorlessManaSources = new CardCollection();
+         final CardCollection oneManaSources = new CardCollection();
+         final CardCollection twoManaSources = new CardCollection();
+@@ -2167,6 +2227,9 @@
+                     }
+                 }
+                 if (dealsLethalOnTap) {
++                    // HARNESS PATCH (docs/harness/ENGINE-PATCHES.md): a harness seat may tap a source whose damage
++                    // is lethal (RP_017: Angel's Grace first), so it is kept, but it pays last, never before a safe one.
++                    if (HARNESS_SEAT_PAYS_BY_RULES.test(ai)) lethalManaSources.add(card); // HARNESS PATCH
+                     continue;
+                 }
+             }
+@@ -2260,6 +2323,7 @@
+         ComputerUtilCard.sortByEvaluateCreature(useLastManaSources);
+         Collections.reverse(useLastManaSources);
+         sortedManaSources.addAll(sortedManaSources.size(), useLastManaSources);
++        sortedManaSources.addAll(lethalManaSources);
+         if (!painfulManaSources.isEmpty()) {
+             // the cheapest lands first, so the life that they may cost (never the last point) buys the most mana
+             final Map<Card, Integer> cost = new HashMap<>();

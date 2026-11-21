@@ -1,0 +1,8 @@
+{
+  "patched_commit": "eca608f57a47aca561c8559a534bd70d864edc75",
+  "jar_relative_path": "forge-gui-desktop/target/forge-gui-desktop-2.0.17-SNAPSHOT-jar-with-dependencies.jar",
+  "jar_sha256": "57a7dea9aca9442b25922c7c97ced0653de2a89b8cb7c413570207dc4d82faa2",
+  "sources": {
+    "forge-ai/src/main/java/forge/ai/ComputerUtilMana.java": "8b915d8965a66f4f033b6a1b0a46e24211dc04514bf265702cb3d1da63136de1"
+  }
+}
