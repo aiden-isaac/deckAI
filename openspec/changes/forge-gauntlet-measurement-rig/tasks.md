@@ -12,7 +12,7 @@ Authorized revision 2026-11-21: CLI-piloted Standard learning MVP. Historical ch
 
 - [ ] 2.1 Source Izzet aggro/prowess 60+15 plus profile, sideboard guide and source manifest; verify three-source legality, counts and claim-level URLs or inference labels
 - [ ] 2.2 Source aggressive landfall 60+15 plus profile, sideboard guide and source manifest; verify legality/counts, provenance and video/transcript access labels
-- [ ] 2.3 Validate proposed sideboard exchanges against frozen lists; verify present cards, equal in/out counts, postboard legality and inferred-matchup labels
+- [x] 2.3 Validate proposed sideboard exchanges against frozen lists; verify present cards, equal in/out counts, postboard legality and inferred-matchup labels
 
 ## 3. Rules-engine external seats
 
