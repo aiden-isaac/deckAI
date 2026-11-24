@@ -1,6 +1,6 @@
-From 31a6f7eabe78499edd81b17507e94c7dba1e4302 Mon Sep 17 00:00:00 2001
+From eca608f57a47aca561c8559a534bd70d864edc75 Mon Sep 17 00:00:00 2001
 From: aiden-isaac <aidenisaac08@gmail.com>
-Date: Fri, 20 Nov 2026 23:34:59 +0800
+Date: Fri, 20 Nov 2026 23:42:57 +0800
 Subject: [PATCH 2/2] sim-per-game-seed: reseed each independent game from a
  seed file
 
@@ -9,10 +9,10 @@ Subject: [PATCH 2/2] sim-per-game-seed: reseed each independent game from a
  1 file changed, 32 insertions(+), 3 deletions(-)
 
 diff --git a/forge-gui-desktop/src/main/java/forge/view/SimulateMatch.java b/forge-gui-desktop/src/main/java/forge/view/SimulateMatch.java
-index 07666097..6d1e9c19 100644
+index b1082c85..4637c04f 100644
 --- a/forge-gui-desktop/src/main/java/forge/view/SimulateMatch.java
 +++ b/forge-gui-desktop/src/main/java/forge/view/SimulateMatch.java
-@@ -134,6 +134,24 @@ public class SimulateMatch {
+@@ -137,6 +137,24 @@ public class SimulateMatch {
              MyRandom.setRandom(new Random(seed));
          }
  
@@ -35,9 +35,9 @@ index 07666097..6d1e9c19 100644
 +        }
 +
          Path output = params.containsKey("o") ? Path.of(params.get("o").get(0)) : null;
-         Integer firstSeat = params.containsKey("first") ? Integer.valueOf(params.get("first").get(0)) : null;
-         if (firstSeat != null && (firstSeat < 0 || firstSeat > 1)) {
-@@ -231,14 +249,14 @@ public class SimulateMatch {
+         if (output != null) {
+             // Desktop opening-hand preferences must not change the measuring instrument.
+@@ -240,14 +258,14 @@ public class SimulateMatch {
              int iGame = 0;
              while (!mc.isMatchOver()) {
                  // play games until the match ends
@@ -55,7 +55,7 @@ index 07666097..6d1e9c19 100644
              }
          }
  
-@@ -248,6 +266,16 @@ public class SimulateMatch {
+@@ -257,6 +275,16 @@ public class SimulateMatch {
          System.out.flush();
      }
  
@@ -72,7 +72,7 @@ index 07666097..6d1e9c19 100644
      private static void argumentHelp() {
          System.out.println("Syntax: forge.exe sim -d <deck1[.dck]> ... <deckX[.dck]> -D [D] -n [N] -m [M] -t [T] -p [P] -f [F] -s [S] -a [A] -mc [on|off] -q");
          System.out.println("\tsim - stands for simulation mode");
-@@ -263,6 +291,7 @@ public class SimulateMatch {
+@@ -272,6 +300,7 @@ public class SimulateMatch {
          System.out.println("\tA - AI profile per player, in the same order as the decks (e.g. -a Default Experimental)");
          System.out.println("\tc - Clock flag. Set the maximum time in seconds before calling the match a draw, defaults to 120.");
          System.out.println("\tmc - Flat Monte Carlo AI refinement for this run, on, max or off (default off in simulations; max = desktop strength). Prints timing statistics at the end when on.");

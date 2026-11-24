@@ -1,0 +1,107 @@
+{
+  "format": "Standard",
+  "retrieved_on": "2026-11-21",
+  "deck_file": "mono-green-landfall.dck",
+  "decklist": {
+    "player": "Maxime Rayvich",
+    "event": "Magic World Championship 32",
+    "event_date": "2026-11-13",
+    "finish": "World Championship entrant; no finish claimed here",
+    "main_count": 60,
+    "sideboard_count": 15,
+    "primary_url": "https://magic.gg/decklists/magic-world-championship-32-standard-decklists-m-z",
+    "corroborating_list_url": "https://www.mtgcontent.com/decks/cmwfnv7xx5ltfp34huemrtgum",
+    "notes": "The Wizards decklist page is the primary source. The mirrored entry identifies Maxime Rayvich, date, exact 60/15 card counts, and links back to magic.gg."
+  },
+  "guides": [
+    {
+      "id": "S1",
+      "author": "yang hoso",
+      "title": "[Standard] 75-Card Mono-Green Landfall Guide",
+      "published": "2026-10-15; page says updated 2026-10-27",
+      "url": "https://note.com/yang_hoso/n/n8127f1bb62e7?hl=en",
+      "access": "free article accessible; paid matchup section unavailable and not accessed",
+      "pilot_basis": "Author reports a 5-0 qualifier run and a student using the 75 for 5-1-1.",
+      "usable_advice": [
+        "Keep/mulligan heuristic centered on 12 early plays",
+        "Flexible fast-damage versus Sapling Nursery plans",
+        "Sequencing, land count, and Harmonizer math"
+      ],
+      "limits": "The article's paid sideboard section is unavailable. Some card names are translated by the page; the 12-card early-play mapping to this list is an explicit adaptation."
+    },
+    {
+      "id": "S2",
+      "author": "January (mommydom_manifesto on MTGO)",
+      "title": "Mono-Green Landfall – An In-Depth Guide",
+      "published": "not stated on page; guide's list is from Regional Championship Vancouver 2026",
+      "url": "https://decktionary.com/guest/mono-green-landfall-an-in-depth-guide/",
+      "access": "accessible article",
+      "pilot_basis": "Author says they played the list to 2nd place among 240 at RC Vancouver, qualified for Worlds/PT, and describes testing and matchup experience.",
+      "usable_advice": [
+        "Flexible ramp/beatdown/combo plans",
+        "Fetch and Icetill/Harmonizer trigger sequencing",
+        "Combat and specific Prowess matchup guidance"
+      ],
+      "limits": "Guide's older 75 and sideboard plan differ from Maxime Rayvich's current Worlds list; exact swaps are not copied. The author labels their in/out mappings as suggestions."
+    },
+    {
+      "id": "S3",
+      "author": "Romeu",
+      "title": "Standard: Mono Green Landfall - Deck Tech & Sideboard Guide",
+      "published": "2026-03-20",
+      "url": "https://mtg.cardsrealm.com/en-us/articles/standard-mono-green-landfall-deck-tech-sideboard-guide",
+      "access": "accessible article",
+      "pilot_basis": "Editorial archetype guide; not represented as the author's tournament pilot report.",
+      "usable_advice": [
+        "Ramp and landfall engine roles",
+        "Sazh's Chocobo pressure and Icetill/Harmonizer combo lines",
+        "Sapling Nursery side-out conditions"
+      ],
+      "limits": "Older list and metagame; supplemental only."
+    }
+  ],
+  "video_evidence": {
+    "status": "description inspected; video/transcript not inspected",
+    "author": "Mythic Maria",
+    "title": "MTG STANDARD ft my deck from RC Turin MONO GREEN LANDFALL",
+    "published": "2026-03-12",
+    "url": "https://www.youtube.com/watch?v=7YjwjVSj0mY",
+    "description_evidence": "Description identifies this as a Twitch VOD and lists games at 07:48 vs Golgari Landfall, 31:51 vs Rakdos Monument, 46:31 vs UR Spellementals, 1:00:29 vs Mono-Green Landfall, and 1:41:05 vs Gruul Landfall.",
+    "limits": "Public metadata/description was inspected; YouTube reported no subtitles and no claim is made that the gameplay was watched. The author's linked paid sideboard guide was not accessed."
+  },
+  "sideboard_plans": [
+    {
+      "opponent": "Izzet Prowess",
+      "status": "inference; untested adaptation of S2",
+      "source_context": "S2's first-person Prowess plan adds Torpor Orb, Surrak, and Pawpatch, and trims a Harmonizer, two Hydra, and two Badgermole Cub from a different 75. This Worlds list lacks Pawpatch/Cub. Current Izzet Prowess creatures do not present an obvious Torpor Orb target: Pompous Battlemage enters prepared via a replacement effect, and Ravenous Cosmozoan has a cost-reduction ability.",
+      "in": [
+        {"card": "Surrak, Elusive Hunter", "count": 2},
+        {"card": "Warg Tactics", "count": 1},
+        {"card": "Hard-Hitting Question", "count": 2}
+      ],
+      "out": [
+        {"card": "Lumbering Worldwagon", "count": 1},
+        {"card": "Bushwhack", "count": 1},
+        {"card": "Esper Origins", "count": 1},
+        {"card": "Mossborn Hydra", "count": 2}
+      ]
+    }
+  ],
+  "legality_check": {
+    "checked_on": "2026-11-21",
+    "method": "Local build_validator against pinned Forge Standard format, installed cardsfolder, edition lists, and cached Scryfall Standard paper bulk index; allow_network=false.",
+    "scryfall_bulk_file": "oracle-cards-20261120100203.jsonl.gz",
+    "format_file": "forge-gui/res/formats/Sanctioned/Standard.txt (relative to the pinned Forge checkout)",
+    "format_sha256": "9fedc0d18436fb8c5ab4bbcbdc6346ac41cde1549e7d0bc16eb358e7fb4f855f",
+    "cardsfolder_scripts": 34466,
+    "unique_cards": 27,
+    "counts": {"main": 60, "sideboard": 15},
+    "checks": {"card_pool": true, "format_legality": true, "source_agreement": true, "construction_rules": true, "pilot_competence": true},
+    "source_disagreements": 0,
+    "pilot_competence_disclosures": [
+      "Demolition Field: AI:RemoveDeck:Random",
+      "Torpor Orb: AI:RemoveDeck:Random"
+    ],
+    "status": "passed_with_disclosures"
+  }
+}

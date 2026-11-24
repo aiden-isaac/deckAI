@@ -1,13 +1,13 @@
 Error handling registered!
-23:37:05 [INFO ] GuiBase: ##########################################
-23:37:05 [INFO ] GuiBase: APP: Forge v.2.0.17-SNAPSHOT-11.20
-23:37:05 [INFO ] GuiBase: Java: 17.0.21.1 (Eclipse Adoptium)
-23:37:05 [INFO ] GuiBase: OS: Linux 7.2.11-arch1-1 amd64
-23:37:05 [INFO ] GuiBase: RAM: 2048 MB max, 20 CPUs
-23:37:05 [INFO ] GuiBase: ##########################################
+23:45:30 [INFO ] GuiBase: ##########################################
+23:45:30 [INFO ] GuiBase: APP: Forge v.2.0.17-SNAPSHOT-11.20
+23:45:30 [INFO ] GuiBase: Java: 17.0.21.1 (Eclipse Adoptium)
+23:45:30 [INFO ] GuiBase: OS: Linux 7.2.11-arch1-1 amd64
+23:45:30 [INFO ] GuiBase: RAM: 2048 MB max, 20 CPUs
+23:45:30 [INFO ] GuiBase: ##########################################
 Language 'en-US' loaded successfully.
 (ThreadUtil first call): Running with priority 5
-Read cards: 34482 files in 0 ms (25 parts) using thread pool
+Read cards: 34482 files in 1 ms (25 parts) using thread pool
 Upcoming set Marvel: Darkhold Destiny (MDD) dated in the future. All `upcoming` cards will be added to this set with unknown rarity.
 The card A-Alrund's Epiphany was not assigned to any set. Adding it to UNKNOWN set... to fix see res/editions/ folder. 
 The card A-Baba Lysaga, Night Witch was not assigned to any set. Adding it to UNKNOWN set... to fix see res/editions/ folder. 
@@ -40,7 +40,7 @@ Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
 Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
 
-Game Result: Game 1 ended in 3176 ms. Ai(2)-Slayer 3 has won!
+Game Result: Game 1 ended in 3560 ms. Ai(2)-Slayer 3 has won!
 
 Warning: default (ie. inherited from base class) implementation of chooseSingleCard is used by Urge to Feed for forge.ai.ability.TapAi. Consider declaring an overloaded method
 Correcting zone for Vampire Nocturnus (114)
@@ -53,7 +53,7 @@ Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
 Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
 
-Game Result: Game 2 ended in 1622 ms. Ai(2)-Slayer 3 has won!
+Game Result: Game 2 ended in 1828 ms. Ai(2)-Slayer 3 has won!
 
 Game Outcome: Match Duration 0m : 02s
 Game Outcome: Turn 7
@@ -61,7 +61,7 @@ Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
 Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
 
-Game Result: Game 3 ended in 3248 ms. Ai(2)-Slayer 3 has won!
+Game Result: Game 3 ended in 2847 ms. Ai(2)-Slayer 3 has won!
 
 Game Outcome: Match Duration 0m : 01s
 Game Outcome: Turn 7
@@ -69,13 +69,13 @@ Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
 Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
 
-Game Result: Game 4 ended in 2114 ms. Ai(2)-Slayer 3 has won!
+Game Result: Game 4 ended in 1502 ms. Ai(2)-Slayer 3 has won!
 
-Game Outcome: Match Duration 0m : 01s
+Game Outcome: Match Duration 0m : 00s
 Game Outcome: Turn 6
 Game Outcome: Ai(1)-Tuktuk 3 has won because all opponents have lost
 Game Outcome: Ai(2)-Slayer 3 has lost because life total reached 0
 Match Result: Ai(1)-Tuktuk 3: 1 Ai(2)-Slayer 3: 0 
 
-Game Result: Game 5 ended in 1295 ms. Ai(1)-Tuktuk 3 has won!
+Game Result: Game 5 ended in 890 ms. Ai(1)-Tuktuk 3 has won!
 

@@ -1,0 +1,88 @@
+{
+  "format": "Standard",
+  "retrieved_on": "2026-11-21",
+  "deck_file": "izzet-prowess.dck",
+  "decklist": {
+    "player": "Charis Kikidis",
+    "event": "Magic World Championship 32",
+    "event_date": "2026-11-13",
+    "finish": "Top 8; the corroborating deck page reports 5th",
+    "main_count": 60,
+    "sideboard_count": 15,
+    "primary_url": "https://magic.gg/decklists/magic-world-championship-32-standard-decklists-a-l",
+    "corroborating_list_url": "https://mtgpal.gg/decks/standard-izzet-prowess-charis-kikidis/6S0JkU3cSxOxZQKCjDn1Ig",
+    "notes": "Wizards' decklist page identifies Charis Kikidis, event, date, and 60/15. The corroborating entry exposes the individual card counts and records 5th place."
+  },
+  "guides": [
+    {
+      "id": "S1",
+      "author": "Lucas (MTG DECKS guide author)",
+      "title": "Standard Izzet Prowess: Deck Tech & Sideboard Guide",
+      "published": "2026-05 (approximate: search listing said six months before 2026-11-21; exact day not verified)",
+      "url": "https://mtgdecks.net/guides/izzet-prowess-secrets-of-strixhaven-standard-413",
+      "access": "accessible article",
+      "pilot_basis": "Author states he built and played the listed version and reports multiple MTGO Challenge Top 8s including a win.",
+      "usable_advice": [
+        "Threat choice and when to use Slickshot Show-Off",
+        "Cantrip and pump sequencing",
+        "Combat timing and protecting threats"
+      ],
+      "limits": "Older post-Secrets of Strixhaven list; not this registered 75. Exact old card-specific interactions and sideboard swaps are not transferred."
+    },
+    {
+      "id": "S2",
+      "author": "BaseMTG editorial team",
+      "title": "Izzet Prowess Standard Deck Guide: Decklist and Matchups",
+      "published": "2026-10 (page reports data through 2026-10-22)",
+      "url": "https://www.basemtg.com/blog/izzet-prowess-standard-deck-guide",
+      "access": "accessible article",
+      "pilot_basis": "Substantive current-archetype guide using published MTGO Challenge lists, match records, and a cited first-person RCQ report; not presented as the authors' own tournament pilot report.",
+      "usable_advice": [
+        "Cheap spell and threat sequencing",
+        "Mono-Green Landfall matchup discussion and older-list sideboard roles",
+        "Historical match records with explicit date and sample limits"
+      ],
+      "limits": "October metagame snapshot; the guide's Broadside Barrage recommendation is absent from this current list."
+    }
+  ],
+  "video_evidence": {
+    "status": "description inspected; video/transcript not inspected",
+    "author": "StickyWicket",
+    "title": "Izzet Prowess Is Here Forever | Standard on MTG Arena",
+    "published": "2026-10-17",
+    "url": "https://www.youtube.com/watch?v=e5BO5nY31FY",
+    "description_evidence": "Description calls this Izzet Prowess with Pompous Battlemage and lists deck tech at 00:00 plus matches at 03:33, 21:52, and 41:04.",
+    "limits": "Public VOD metadata/description was inspected; no subtitles were available and no claim is made that gameplay was watched. The video list is not the frozen Charis Kikidis list."
+  },
+  "sideboard_plans": [
+    {
+      "opponent": "Mono-Green Landfall",
+      "status": "inference; untested",
+      "source_context": "S2 recommends Broadside Barrage and Spell Snare for an older Flow State list; Broadside Barrage is absent from this 75.",
+      "in": [
+        {"card": "Fire Magic", "count": 2},
+        {"card": "Spell Snare", "count": 1},
+        {"card": "Into the Flood Maw", "count": 2}
+      ],
+      "out": [
+        {"card": "Vibrant Outburst", "count": 2},
+        {"card": "Impractical Joke", "count": 1},
+        {"card": "Wild Ride", "count": 2}
+      ]
+    }
+  ],
+  "legality_check": {
+    "checked_on": "2026-11-21",
+    "method": "Local build_validator against pinned Forge Standard format, installed cardsfolder, edition lists, and cached Scryfall Standard paper bulk index; allow_network=false.",
+    "scryfall_bulk_file": "oracle-cards-20261120100203.jsonl.gz",
+    "format_file": "forge-gui/res/formats/Sanctioned/Standard.txt (relative to the pinned Forge checkout)",
+    "format_sha256": "9fedc0d18436fb8c5ab4bbcbdc6346ac41cde1549e7d0bc16eb358e7fb4f855f",
+    "cardsfolder_scripts": 34466,
+    "unique_cards": 27,
+    "counts": {"main": 60, "sideboard": 15},
+    "checks": {"card_pool": true, "format_legality": true, "source_agreement": true, "construction_rules": true, "pilot_competence": true},
+    "source_disagreements": 0,
+    "pilot_competence_disclosures": [],
+    "status": "passed"
+  }
+}

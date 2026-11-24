@@ -1,10 +1,10 @@
 Error handling registered!
-23:37:23 [INFO ] GuiBase: ##########################################
-23:37:23 [INFO ] GuiBase: APP: Forge v.2.0.17-SNAPSHOT-11.20
-23:37:23 [INFO ] GuiBase: Java: 17.0.21.1 (Eclipse Adoptium)
-23:37:23 [INFO ] GuiBase: OS: Linux 7.2.11-arch1-1 amd64
-23:37:23 [INFO ] GuiBase: RAM: 2048 MB max, 20 CPUs
-23:37:23 [INFO ] GuiBase: ##########################################
+23:45:48 [INFO ] GuiBase: ##########################################
+23:45:48 [INFO ] GuiBase: APP: Forge v.2.0.17-SNAPSHOT-11.20
+23:45:48 [INFO ] GuiBase: Java: 17.0.21.1 (Eclipse Adoptium)
+23:45:48 [INFO ] GuiBase: OS: Linux 7.2.11-arch1-1 amd64
+23:45:48 [INFO ] GuiBase: RAM: 2048 MB max, 20 CPUs
+23:45:48 [INFO ] GuiBase: ##########################################
 Language 'en-US' loaded successfully.
 (ThreadUtil first call): Running with priority 5
 Read cards: 34482 files in 0 ms (25 parts) using thread pool
@@ -38,11 +38,11 @@ Game Outcome: Ai(1)-Tuktuk 3 has accepted that the game is a draw
 Game Outcome: Ai(2)-Slayer 3 has accepted that the game is a draw
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 0 
 
-Game Result: Game 1 ended in a Draw! Took 570 ms.
+Game Result: Game 1 ended in a Draw! Took 431 ms.
 Stopping slow match as draw
 Game Outcome: Turn 0
 Game Outcome: Ai(1)-Tuktuk 3 has accepted that the game is a draw
 Game Outcome: Ai(2)-Slayer 3 has accepted that the game is a draw
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 0 
 
-Game Result: Game 2 ended in a Draw! Took 267 ms.
+Game Result: Game 2 ended in a Draw! Took 260 ms.

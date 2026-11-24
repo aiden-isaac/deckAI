@@ -1,10 +1,10 @@
 Error handling registered!
-23:39:37 [INFO ] GuiBase: ##########################################
-23:39:37 [INFO ] GuiBase: APP: Forge v.2.0.17-SNAPSHOT-11.20
-23:39:37 [INFO ] GuiBase: Java: 17.0.21.1 (Eclipse Adoptium)
-23:39:37 [INFO ] GuiBase: OS: Linux 7.2.11-arch1-1 amd64
-23:39:37 [INFO ] GuiBase: RAM: 2048 MB max, 20 CPUs
-23:39:37 [INFO ] GuiBase: ##########################################
+23:46:22 [INFO ] GuiBase: ##########################################
+23:46:22 [INFO ] GuiBase: APP: Forge v.2.0.17-SNAPSHOT-11.20
+23:46:22 [INFO ] GuiBase: Java: 17.0.21.1 (Eclipse Adoptium)
+23:46:22 [INFO ] GuiBase: OS: Linux 7.2.11-arch1-1 amd64
+23:46:22 [INFO ] GuiBase: RAM: 2048 MB max, 20 CPUs
+23:46:22 [INFO ] GuiBase: ##########################################
 Language 'en-US' loaded successfully.
 (ThreadUtil first call): Running with priority 5
 Read cards: 34482 files in 0 ms (25 parts) using thread pool
@@ -32,10 +32,10 @@ Upcoming set Marvel: Darkhold Destiny (MDD) dated in the future. All `upcoming` 
 Read cards: 864 files in 0 ms (8 parts) using thread pool
 Simulation mode
 main > java.lang.IllegalArgumentException: Seed file must contain exactly -n signed 64-bit integers, one per line
-	at forge.view.SimulateMatch.simulate(SimulateMatch.java:151)
+	at forge.view.SimulateMatch.simulate(SimulateMatch.java:154)
 	at forge.view.Main.main(Main.java:104)
 == Report a crash ==
 java.lang.IllegalArgumentException: Seed file must contain exactly -n signed 64-bit integers, one per line
-	at forge.view.SimulateMatch.simulate(SimulateMatch.java:151)
+	at forge.view.SimulateMatch.simulate(SimulateMatch.java:154)
 	at forge.view.Main.main(Main.java:104)
 

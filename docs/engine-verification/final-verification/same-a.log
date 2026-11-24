@@ -1,10 +1,10 @@
 Error handling registered!
-23:35:50 [INFO ] GuiBase: ##########################################
-23:35:50 [INFO ] GuiBase: APP: Forge v.2.0.17-SNAPSHOT-11.20
-23:35:50 [INFO ] GuiBase: Java: 17.0.21.1 (Eclipse Adoptium)
-23:35:50 [INFO ] GuiBase: OS: Linux 7.2.11-arch1-1 amd64
-23:35:50 [INFO ] GuiBase: RAM: 2048 MB max, 20 CPUs
-23:35:50 [INFO ] GuiBase: ##########################################
+23:43:55 [INFO ] GuiBase: ##########################################
+23:43:55 [INFO ] GuiBase: APP: Forge v.2.0.17-SNAPSHOT-11.20
+23:43:55 [INFO ] GuiBase: Java: 17.0.21.1 (Eclipse Adoptium)
+23:43:55 [INFO ] GuiBase: OS: Linux 7.2.11-arch1-1 amd64
+23:43:55 [INFO ] GuiBase: RAM: 2048 MB max, 20 CPUs
+23:43:55 [INFO ] GuiBase: ##########################################
 Language 'en-US' loaded successfully.
 (ThreadUtil first call): Running with priority 5
 Read cards: 34482 files in 0 ms (25 parts) using thread pool
@@ -34,25 +34,33 @@ Simulation mode
 Ai(1)-Tuktuk 3 [Default] vs Ai(2)-Slayer 3 [Default] - ten games of Constructed
 Correcting zone for Bloodghast (61)
 Correcting zone for Bloodghast (61)
+Game Outcome: Match Duration 0m : 03s
+Game Outcome: Turn 6
+Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
+Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
+Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
+
+Game Result: Game 1 ended in 4129 ms. Ai(2)-Slayer 3 has won!
+
+Correcting zone for Vampire Nighthawk (110)
+Correcting zone for Vampire Nighthawk (110)
+Correcting zone for Vampire Nighthawk (110)
+Correcting zone for Vampire Nighthawk (110)
 Game Outcome: Match Duration 0m : 02s
 Game Outcome: Turn 6
 Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
 Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
 
-Game Result: Game 1 ended in 2846 ms. Ai(2)-Slayer 3 has won!
+Game Result: Game 2 ended in 3030 ms. Ai(2)-Slayer 3 has won!
 
-Correcting zone for Vampire Nighthawk (110)
-Correcting zone for Vampire Nighthawk (110)
-Correcting zone for Vampire Nighthawk (110)
-Correcting zone for Vampire Nighthawk (110)
-Game Outcome: Match Duration 0m : 01s
-Game Outcome: Turn 6
+Game Outcome: Match Duration 0m : 03s
+Game Outcome: Turn 8
 Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
 Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
 
-Game Result: Game 2 ended in 1245 ms. Ai(2)-Slayer 3 has won!
+Game Result: Game 3 ended in 3996 ms. Ai(2)-Slayer 3 has won!
 
 Game Outcome: Match Duration 0m : 01s
 Game Outcome: Turn 8
@@ -60,57 +68,49 @@ Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
 Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
 
-Game Result: Game 3 ended in 1755 ms. Ai(2)-Slayer 3 has won!
-
-Game Outcome: Match Duration 0m : 00s
-Game Outcome: Turn 8
-Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
-Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
-Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
-
-Game Result: Game 4 ended in 1234 ms. Ai(2)-Slayer 3 has won!
+Game Result: Game 4 ended in 1995 ms. Ai(2)-Slayer 3 has won!
 
 Warning: default (ie. inherited from base class) implementation of chooseSingleCard is used by Urge to Feed for forge.ai.ability.TapAi. Consider declaring an overloaded method
-Game Outcome: Match Duration 0m : 00s
+Game Outcome: Match Duration 0m : 01s
 Game Outcome: Turn 9
 Game Outcome: Ai(1)-Tuktuk 3 has won because all opponents have lost
 Game Outcome: Ai(2)-Slayer 3 has lost because life total reached 0
 Match Result: Ai(1)-Tuktuk 3: 1 Ai(2)-Slayer 3: 0 
 
-Game Result: Game 5 ended in 927 ms. Ai(1)-Tuktuk 3 has won!
+Game Result: Game 5 ended in 1449 ms. Ai(1)-Tuktuk 3 has won!
 
-Game Outcome: Match Duration 0m : 00s
+Game Outcome: Match Duration 0m : 01s
 Game Outcome: Turn 7
 Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
 Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
 
-Game Result: Game 6 ended in 1107 ms. Ai(2)-Slayer 3 has won!
+Game Result: Game 6 ended in 2346 ms. Ai(2)-Slayer 3 has won!
 
 Correcting zone for Vampire Nighthawk (112)
-Game Outcome: Match Duration 0m : 00s
+Game Outcome: Match Duration 0m : 01s
 Game Outcome: Turn 5
 Game Outcome: Ai(1)-Tuktuk 3 has won because all opponents have lost
 Game Outcome: Ai(2)-Slayer 3 has lost because life total reached 0
 Match Result: Ai(1)-Tuktuk 3: 1 Ai(2)-Slayer 3: 0 
 
-Game Result: Game 7 ended in 744 ms. Ai(1)-Tuktuk 3 has won!
+Game Result: Game 7 ended in 1745 ms. Ai(1)-Tuktuk 3 has won!
 
-Game Outcome: Match Duration 0m : 00s
+Game Outcome: Match Duration 0m : 01s
 Game Outcome: Turn 7
 Game Outcome: Ai(1)-Tuktuk 3 has won because all opponents have lost
 Game Outcome: Ai(2)-Slayer 3 has lost because life total reached 0
 Match Result: Ai(1)-Tuktuk 3: 1 Ai(2)-Slayer 3: 0 
 
-Game Result: Game 8 ended in 937 ms. Ai(1)-Tuktuk 3 has won!
+Game Result: Game 8 ended in 1496 ms. Ai(1)-Tuktuk 3 has won!
 
-Game Outcome: Match Duration 0m : 01s
+Game Outcome: Match Duration 0m : 02s
 Game Outcome: Turn 6
 Game Outcome: Ai(1)-Tuktuk 3 has lost because life total reached 0
 Game Outcome: Ai(2)-Slayer 3 has won because all opponents have lost
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 1 
 
-Game Result: Game 9 ended in 1516 ms. Ai(2)-Slayer 3 has won!
+Game Result: Game 9 ended in 3090 ms. Ai(2)-Slayer 3 has won!
 
 Game Outcome: Match Duration 0m : 00s
 Game Outcome: Turn 6
@@ -118,5 +118,5 @@ Game Outcome: Ai(1)-Tuktuk 3 has won because all opponents have lost
 Game Outcome: Ai(2)-Slayer 3 has lost because life total reached 0
 Match Result: Ai(1)-Tuktuk 3: 1 Ai(2)-Slayer 3: 0 
 
-Game Result: Game 10 ended in 694 ms. Ai(1)-Tuktuk 3 has won!
+Game Result: Game 10 ended in 1352 ms. Ai(1)-Tuktuk 3 has won!
 

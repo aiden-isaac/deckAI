@@ -1,4 +1,4 @@
-From 3f23dbb5c63fe79c376bb74268368b9dbcde7f7e Mon Sep 17 00:00:00 2001
+From 53ecd5fe4861c79282dd6c1ba1e6d1c56fc82546 Mon Sep 17 00:00:00 2001
 From: aiden-isaac <aidenisaac08@gmail.com>
 Date: Fri, 20 Nov 2026 23:28:40 +0800
 Subject: [PATCH 1/2] sim-jsonl-output: append measured game records and
@@ -7,8 +7,8 @@ Subject: [PATCH 1/2] sim-jsonl-output: append measured game records and
 ---
  .../src/main/java/forge/game/GameAction.java  |   4 +
  .../src/main/java/forge/game/Match.java       |  19 ++-
- .../main/java/forge/view/SimulateMatch.java   | 149 ++++++++++++++++--
- 3 files changed, 156 insertions(+), 16 deletions(-)
+ .../main/java/forge/view/SimulateMatch.java   | 160 ++++++++++++++++--
+ 3 files changed, 167 insertions(+), 16 deletions(-)
 
 diff --git a/forge-game/src/main/java/forge/game/GameAction.java b/forge-game/src/main/java/forge/game/GameAction.java
 index 2fa9f2f3..61e14ec8 100644
@@ -85,7 +85,7 @@ index d60456f4..86b106af 100644
                  for (Card c : player.getCardsIn(ZoneType.Library)) {
                      c.setTapped(false);
 diff --git a/forge-gui-desktop/src/main/java/forge/view/SimulateMatch.java b/forge-gui-desktop/src/main/java/forge/view/SimulateMatch.java
-index 66fde34d..07666097 100644
+index 66fde34d..b1082c85 100644
 --- a/forge-gui-desktop/src/main/java/forge/view/SimulateMatch.java
 +++ b/forge-gui-desktop/src/main/java/forge/view/SimulateMatch.java
 @@ -1,6 +1,20 @@
@@ -109,11 +109,27 @@ index 66fde34d..07666097 100644
  import java.util.*;
  import java.util.concurrent.TimeUnit;
  import java.util.concurrent.TimeoutException;
-@@ -120,6 +134,16 @@ public class SimulateMatch {
+@@ -8,6 +22,9 @@ import java.util.concurrent.TimeoutException;
+ import org.apache.commons.lang3.time.StopWatch;
+ 
+ import forge.LobbyPlayer;
++import forge.MulliganDefs;
++import forge.card.CardAiHints;
++import forge.ai.simulation.AiCardLists;
+ import forge.ai.AiProfileUtil;
+ import forge.ai.simulation.FlatMonteCarloStats;
+ import forge.deck.Deck;
+@@ -120,6 +137,22 @@ public class SimulateMatch {
              MyRandom.setRandom(new Random(seed));
          }
  
 +        Path output = params.containsKey("o") ? Path.of(params.get("o").get(0)) : null;
++        if (output != null) {
++            // Desktop opening-hand preferences must not change the measuring instrument.
++            FModel.getMagicDb().setFilteredHandsEnabled(false);
++            FModel.getMagicDb().setMulliganRule(MulliganDefs.MulliganRule.London);
++            CardAiHints.setKeptForFlatMc(name -> Boolean.TRUE.equals(flatMonteCarlo) && AiCardLists.isFlatMcPlayable(name));
++        }
 +        Integer firstSeat = params.containsKey("first") ? Integer.valueOf(params.get("first").get(0)) : null;
 +        if (firstSeat != null && (firstSeat < 0 || firstSeat > 1)) {
 +            throw new IllegalArgumentException("-first must be 0 or 1");
@@ -126,7 +142,7 @@ index 66fde34d..07666097 100644
          GameType type = GameType.Constructed;
          if (params.containsKey("f")) {
              type = GameType.valueOf(WordUtil.capitalize(params.get("f").get(0)));
-@@ -198,18 +222,23 @@ public class SimulateMatch {
+@@ -198,18 +231,23 @@ public class SimulateMatch {
  
          System.out.println(sb);
  
@@ -152,7 +168,7 @@ index 66fde34d..07666097 100644
              }
          }
  
-@@ -234,34 +263,107 @@ public class SimulateMatch {
+@@ -234,34 +272,109 @@ public class SimulateMatch {
          System.out.println("\tA - AI profile per player, in the same order as the decks (e.g. -a Default Experimental)");
          System.out.println("\tc - Clock flag. Set the maximum time in seconds before calling the match a draw, defaults to 120.");
          System.out.println("\tmc - Flat Monte Carlo AI refinement for this run, on, max or off (default off in simulations; max = desktop strength). Prints timing statistics at the end when on.");
@@ -252,6 +268,8 @@ index 66fde34d..07666097 100644
 +            record.put("seats", mc.getPlayers().stream().map(p -> p.getDeck().getName()).toArray());
 +            record.put("first_player_seat", seats.indexOf(g1.getStartingPlayer()));
 +            record.put("mulligans", mulligans);
++            record.put("filtered_hands", FModel.getMagicDb().getFilteredHandsEnabled());
++            record.put("mulligan_rule", FModel.getMagicDb().getMulliganRule().name());
 +            record.put("damage_by_turn_5", damage.totals);
 +            record.put("draw", draw);
 +            record.put("clock_terminated", clockTerminated);
@@ -270,7 +288,7 @@ index 66fde34d..07666097 100644
          }
  
          List<GameLogEntry> log;
-@@ -283,6 +385,29 @@ public class SimulateMatch {
+@@ -283,6 +396,29 @@ public class SimulateMatch {
          }
      }
  

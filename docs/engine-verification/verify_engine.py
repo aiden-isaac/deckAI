@@ -9,18 +9,18 @@ REQUIRED = {
     'winner_seat', 'winner', 'loss_reason', 'turns', 'elapsed_ms', 'seed',
     'seats', 'first_player_seat', 'mulligans', 'damage_by_turn_5', 'draw',
     'clock_terminated', 'match_game_index', 'game_index', 'sideboarding',
-    'stripped', 'cannot_play_well',
+    'stripped', 'cannot_play_well', 'filtered_hands', 'mulligan_rule',
 }
 
 
-def run(java, jar, forge, evidence, label, seeds, first=0, decks=None, clock=120):
+def run(java, jar, forge, evidence, label, seeds, first=0, decks=None, clock=120, jvm_options=()):
     seedfile = evidence / f'{label}.seeds'
     seedfile.write_text(''.join(f'{seed}\n' for seed in seeds))
     output = evidence / f'{label}.jsonl'
     assert not output.exists(), f'Refusing to append to old evidence: {output}'
     deckdir = forge / 'forge-gui/res/quest/world/zendikar/duels'
     deck_args = ['-D', str(deckdir), '-d', 'Tuktuk 3.dck', 'Slayer 3.dck'] if decks is None else ['-D', '/', '-d', *[str(p).lstrip('/') for p in decks]]
-    command = [str(java), '-Xmx2g', '-Djava.awt.headless=true', '-jar', str(jar),
+    command = [str(java), *jvm_options, '-Xmx2g', '-Djava.awt.headless=true', '-jar', str(jar),
                'sim', *deck_args, '-n', str(len(seeds)), '-S', str(seedfile),
                '-first', str(first), '-a', 'Default', 'Default', '-mc', 'off',
                '-c', str(clock), '-q', '-o', str(output)]
@@ -37,6 +37,7 @@ def run(java, jar, forge, evidence, label, seeds, first=0, decks=None, clock=120
         assert row['winner_seat'] in (None, 0, 1)
         assert row['draw'] == (row['winner_seat'] is None)
         assert row['loss_reason'] and row['elapsed_ms'] >= 0 and row['turns'] >= 0
+        assert row['filtered_hands'] is False and row['mulligan_rule'] == 'London'
         assert len(row['mulligans']) == len(row['damage_by_turn_5']) == len(row['seats']) == 2
         assert all(isinstance(n, int) and n >= 0 for n in row['mulligans'] + row['damage_by_turn_5'])
     return rows

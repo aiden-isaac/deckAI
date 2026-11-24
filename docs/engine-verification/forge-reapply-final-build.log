@@ -14,6 +14,11 @@
 [INFO]   from pom.xml
 [INFO] --------------------------------[ pom ]---------------------------------
 [INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge ---
+[INFO] Deleting /tmp/deckai-forge-reapply-final/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge ---
+[INFO] 
 [INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge ---
 [INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
 [INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
@@ -31,6 +36,11 @@ Audit done.
 [INFO] Building Forge Core 2.0.17-SNAPSHOT                                [2/6]
 [INFO]   from forge-core/pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge-core ---
+[INFO] Deleting /tmp/deckai-forge-reapply-final/forge-core/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge-core ---
 [INFO] 
 [INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge-core ---
 [INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
@@ -71,6 +81,11 @@ Audit done.
 [INFO] Building Forge Game 2.0.17-SNAPSHOT                                [3/6]
 [INFO]   from forge-game/pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge-game ---
+[INFO] Deleting /tmp/deckai-forge-reapply-final/forge-game/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge-game ---
 [INFO] 
 [INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge-game ---
 [INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
@@ -113,6 +128,11 @@ Audit done.
 [INFO]   from forge-ai/pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge-ai ---
+[INFO] Deleting /tmp/deckai-forge-reapply-final/forge-ai/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge-ai ---
+[INFO] 
 [INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge-ai ---
 [INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
 [INFO] 
@@ -152,6 +172,11 @@ Audit done.
 [INFO] Building Forge Gui 2.0.17-SNAPSHOT                                 [5/6]
 [INFO]   from forge-gui/pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge-gui ---
+[INFO] Deleting /tmp/deckai-forge-reapply-final/forge-gui/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge-gui ---
 [INFO] 
 [INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge-gui ---
 [INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
@@ -195,6 +220,11 @@ Audit done.
 [INFO] Building Forge 2.0.17-SNAPSHOT                                     [6/6]
 [INFO]   from forge-gui-desktop/pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.1.0:clean (default-clean) @ forge-gui-desktop ---
+[INFO] Deleting /tmp/deckai-forge-reapply-final/forge-gui-desktop/target
+[INFO] 
+[INFO] --- flatten:1.6.0:clean (flatten.clean) @ forge-gui-desktop ---
 [INFO] 
 [INFO] --- enforcer:3.3.0:enforce (enforce-versions) @ forge-gui-desktop ---
 [INFO] Rule 2: org.apache.maven.enforcer.rules.RequirePluginVersions passed
@@ -272,15 +302,15 @@ WARNING: No forge- tags found. CHANGES.txt will be empty.
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for Forge Parent 2.0.17-SNAPSHOT:
 [INFO] 
-[INFO] Forge Parent ....................................... SUCCESS [  1.095 s]
-[INFO] Forge Core ......................................... SUCCESS [ 13.488 s]
-[INFO] Forge Game ......................................... SUCCESS [ 20.008 s]
-[INFO] Forge AI ........................................... SUCCESS [ 14.317 s]
-[INFO] Forge Gui .......................................... SUCCESS [ 10.735 s]
-[INFO] Forge .............................................. SUCCESS [ 27.469 s]
+[INFO] Forge Parent ....................................... SUCCESS [  1.065 s]
+[INFO] Forge Core ......................................... SUCCESS [ 12.302 s]
+[INFO] Forge Game ......................................... SUCCESS [ 27.177 s]
+[INFO] Forge AI ........................................... SUCCESS [ 14.879 s]
+[INFO] Forge Gui .......................................... SUCCESS [ 14.532 s]
+[INFO] Forge .............................................. SUCCESS [ 30.708 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  01:27 min
-[INFO] Finished at: 2026-11-20T23:37:48+08:00
+[INFO] Total time:  01:40 min
+[INFO] Finished at: 2026-11-20T23:45:38+08:00
 [INFO] ------------------------------------------------------------------------

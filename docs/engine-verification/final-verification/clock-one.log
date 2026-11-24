@@ -1,10 +1,10 @@
 Error handling registered!
-23:37:30 [INFO ] GuiBase: ##########################################
-23:37:30 [INFO ] GuiBase: APP: Forge v.2.0.17-SNAPSHOT-11.20
-23:37:30 [INFO ] GuiBase: Java: 17.0.21.1 (Eclipse Adoptium)
-23:37:30 [INFO ] GuiBase: OS: Linux 7.2.11-arch1-1 amd64
-23:37:30 [INFO ] GuiBase: RAM: 2048 MB max, 20 CPUs
-23:37:30 [INFO ] GuiBase: ##########################################
+23:45:54 [INFO ] GuiBase: ##########################################
+23:45:54 [INFO ] GuiBase: APP: Forge v.2.0.17-SNAPSHOT-11.20
+23:45:54 [INFO ] GuiBase: Java: 17.0.21.1 (Eclipse Adoptium)
+23:45:54 [INFO ] GuiBase: OS: Linux 7.2.11-arch1-1 amd64
+23:45:54 [INFO ] GuiBase: RAM: 2048 MB max, 20 CPUs
+23:45:54 [INFO ] GuiBase: ##########################################
 Language 'en-US' loaded successfully.
 (ThreadUtil first call): Running with priority 5
 Read cards: 34482 files in 1 ms (25 parts) using thread pool
@@ -39,7 +39,7 @@ Game Outcome: Ai(1)-Tuktuk 3 has accepted that the game is a draw
 Game Outcome: Ai(2)-Slayer 3 has accepted that the game is a draw
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 0 
 
-Game Result: Game 1 ended in a Draw! Took 1346 ms.
+Game Result: Game 1 ended in a Draw! Took 1365 ms.
 Correcting zone for Bloodghast (61)
 Correcting zone for Bloodghast (61)
 Stopping slow match as draw
@@ -59,7 +59,7 @@ java.lang.InterruptedException
 	at forge.game.GameAction.startGame(GameAction.java:2416)
 	at forge.game.Match.startGame(Match.java:97)
 	at forge.game.Match.startGame(Match.java:82)
-	at forge.view.SimulateMatch.lambda$simulateSingleMatch$0(SimulateMatch.java:325)
+	at forge.view.SimulateMatch.lambda$simulateSingleMatch$1(SimulateMatch.java:334)
 	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
 	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
@@ -71,4 +71,4 @@ Game Outcome: Ai(1)-Tuktuk 3 has accepted that the game is a draw
 Game Outcome: Ai(2)-Slayer 3 has accepted that the game is a draw
 Match Result: Ai(1)-Tuktuk 3: 0 Ai(2)-Slayer 3: 0 
 
-Game Result: Game 2 ended in a Draw! Took 1267 ms.
+Game Result: Game 2 ended in a Draw! Took 1229 ms.
